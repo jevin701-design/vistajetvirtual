@@ -1,0 +1,40 @@
+# VistaJet Group Virtual (VJG) — Project Context
+
+Canonical repository: https://github.com/jevin701-design/vistajetvirtual
+Published site: https://vistajetvirtual.netlify.app/
+
+## Purpose
+This repository should contain the complete VistaJet Group Virtual website and its tools. The Flight Management System (FMS / Flight Desk) is a section/tool of VJG, not a separate project and must not replace the corporate homepage.
+
+## Current repository state checked 2026-10-21
+The root currently contains README.md, codigo-vjg-descarga.zip, index.html, and vjg-github-upload.zip. The current index.html is a Flight Desk/FMS page, not the complete corporate VJG homepage. The complete site and its latest developed sections are not yet consolidated in this repository. Do not claim otherwise.
+
+## Operational rules
+- Callsign prefix: VJT.
+- Private Aviation: flight numbers 100–499.
+- Cargo Operations: flight numbers 500–899.
+- Charter Operations: flight numbers 900–999.
+- Direction is recorded separately as OUT or RET; do not append letters to the flight number.
+- Regional flight numbering is based on departure region.
+- Main headquarters and primary hub: MMLO (Silao, Guanajuato, Mexico).
+- Alternate hub for large aircraft unable to use MMLO: MMQT.
+- Other established hubs: KLAX, EGLL, WSSS, VHHH, YSSY.
+- Each flight leg and aircraft log entry is recorded independently.
+- An aircraft continues from its arrival airport unless an operational plan specifies otherwise.
+
+## Website expectations
+- Maintain a corporate homepage and FMS/Flight Desk integrated within the same VJG site.
+- Build/maintain bilingual Spanish and English content.
+- Include fleet and hubs pages/sections, aircraft specifications and arrival dates where established, and existing VJG tools.
+- Avoid duplicate A380 IF-JNPB specifications.
+- Use correct local time zones and 24-hour Zulu (UTC) time where operationally appropriate; never use AM/PM for Zulu time.
+- Visual identity: scarlet red #E31837, charcoal #17191D, silver #C7CBD1; use the continuous red side line to the footer where appropriate.
+- Preserve existing navigation, fleet, hubs, numbering, missions, and functionality unless the user explicitly asks for a change.
+
+## Editing and deployment rules
+- Inspect current files before editing.
+- Never overwrite the corporate homepage with the FMS.
+- Do not publish/deploy to Netlify without explicit authorization.
+- Do not claim changes were committed, tested, or deployed unless verified.
+- Commit intended site sections coherently and verify the resulting file tree and deployment.
+- Update this file when confirmed project decisions change.
