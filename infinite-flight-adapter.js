@@ -8,26 +8,26 @@
   const ENDPOINT = "/.netlify/functions/infinite-flight-pilot-progress";
   const state = { connected: false, provider: "demo", lastFetchedAt: null };
   async function getPilotProgress(vjgProfile) {
-    if (!vjgProfile || !vjgProfile.infiniteFlightUserId) {
+    if (!vjgProfile || (!vjgProfile.infiniteFlightUsername && !vjgProfile.infiniteFlightUserId)) {
       return { ...state, reason: "missing-linked-infinite-flight-user", flights: null, hours: null };
     }
     try {
       const response = await fetch(ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ infiniteFlightUserId: vjgProfile.infiniteFlightUserId })
+        body: JSON.stringify({ infiniteFlightUsername: vjgProfile.infiniteFlightUsername, infiniteFlightUserId: vjgProfile.infiniteFlightUserId })
       });
       if (!response.ok) throw new Error("Flight data provider unavailable");
       const data = await response.json();
-      if (!data || data.connected !== true || !Number.isFinite(data.completedFlights) || !Number.isFinite(data.flightHours)) {
+      if (!data || data.connected !== true || (!Number.isFinite(data.completedFlights) && !Number.isFinite(data.flightHours))) {
         throw new Error("Invalid provider response");
       }
       return {
         connected: true,
         provider: "infinite-flight",
         lastFetchedAt: data.fetchedAt || new Date().toISOString(),
-        flights: Math.max(0, Math.floor(data.completedFlights)),
-        hours: Math.max(0, data.flightHours)
+        flights: Number.isFinite(data.completedFlights) ? Math.max(0, Math.floor(data.completedFlights)) : null,
+        hours: Number.isFinite(data.flightHours) ? Math.max(0, data.flightHours) : null
       };
     } catch (_) {
       return { ...state, reason: "provider-not-configured", flights: null, hours: null };
