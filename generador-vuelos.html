@@ -46,4 +46,54 @@ footer{border-top:3px solid var(--r);padding:25px 28px;color:var(--m);margin-top
 </script>
 <script>
 (()=>{const map=window.VJG_TRANSLATIONS={"Inicio":"Home","Flota":"Fleet","Hubs":"Hubs","Medio Oriente":"Middle East","VJG · FLIGHT OPERATIONS":"VJG · FLIGHT OPERATIONS","Generador de números de vuelo":"Flight Number Generator","Generador de vuelo":"Flight Generator","Condiciones del aeropuerto":"Airport Conditions","Clima y pistas aparecerán aquí al identificar el aeropuerto.":"Weather and runways will appear here after identifying the airport.","Genera una asignación VJT según la división, la región del aeropuerto de salida y los códigos OACI. Verifica siempre la numeración contra la bitácora activa de VJG.":"Generate a VJT assignment based on division, departure-airport region, and ICAO codes. Always verify the number against VJG’s active flight log.","División":"Division","Región de salida (Private/Cargo)":"Departure region (Private/Cargo)","Norteamérica":"North America","Sudamérica":"South America","Europa":"Europe","Asia":"Asia","Oceanía":"Oceania","África":"Africa","Medio Oriente":"Middle East","Aeropuerto de salida (OACI)":"Departure airport (ICAO)","Aeropuerto de llegada (OACI)":"Arrival airport (ICAO)","Dirección":"Direction","Propósito del vuelo":"Flight purpose","Traslado ejecutivo":"Executive transport","Transporte de carga":"Cargo transport","Vuelo chárter":"Charter flight","Reposicionamiento":"Repositioning","Vuelo de entrenamiento":"Training flight","OUT · Saliente":"OUT · Outbound","RET · Retorno":"RET · Return","Generar número VJT":"Generate VJT number","Clima y pistas aparecerán aquí al identificar el aeropuerto.":"Weather and runways will appear here after identifying the airport.","Consultando clima y pistas…":"Loading weather and runways…","Clima / METAR:":"Weather / METAR:","Temp. ":"Temp. ","Viento ":"Wind ","desde ":"from ","Visibilidad ":"Visibility ","Presión ":"Pressure ","Reporte: ":"Report: ","METAR no disponible para este aeropuerto.":"METAR unavailable for this airport.","No fue posible consultar el METAR.":"Could not retrieve METAR.","Clima no disponible en este momento.":"Weather unavailable right now.","Datos de pista no disponibles en la fuente consultada.":"Runway data unavailable from the selected source.","Pistas: consulta temporalmente no disponible.":"Runway data temporarily unavailable.","Datos orientativos; verifica METAR/NOTAM y fuentes oficiales antes de operar.":"Informational data; verify official METAR/NOTAM and sources before operations.","Completa los datos y genera el número de vuelo.":"Complete the fields and generate a flight number.","El número sugerido es una propuesta local; comprueba que no esté asignado a otro vuelo activo antes de registrarlo.":"The suggested number is a local proposal; verify it is not assigned to another active flight before recording it.","Rangos de numeración":"Numbering ranges","vuelos privados y ejecutivos. La región se determina por el aeropuerto de salida.":"private and executive flights. The region is determined by the departure airport.","transporte de mercancías. La región se determina por el aeropuerto de salida.":"cargo transport. The region is determined by the departure airport.","rango global asignado consecutivamente, sin subdivisión regional.":"global range assigned consecutively without regional subdivisions.","Reglas de identificación":"Identification rules","Prefijo operativo: VJT.":"Operating prefix: VJT.","OUT y RET se registran por separado; no se añaden al número.":"OUT and RET are recorded separately; they are not appended to the number.","El número debe ser único entre rutas activas.":"The number must be unique among active routes.","Usa códigos OACI y valida las capacidades de la aeronave y los aeropuertos.":"Use ICAO codes and validate aircraft and airport capabilities.","← Volver a la página principal":"← Return to homepage"};const btn=document.getElementById('langSwitch');let en=false;const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);const nodes=[];while(walker.nextNode()){const n=walker.currentNode;if(n.nodeValue.trim())nodes.push({n,es:n.nodeValue})}function setLang(toEn){for(const item of nodes){const raw=item.es;const key=raw.trim();if(toEn){let value=map[key];if(value===undefined){for(const [es,tr] of Object.entries(map)){if(key===es){value=tr;break}}}if(value!==undefined)item.n.nodeValue=raw.replace(key,value)}else item.n.nodeValue=raw}document.documentElement.lang=toEn?'en':'es';btn.textContent=toEn?'🇲🇽 Español':'🇺🇸 English'}btn.addEventListener('click',()=>{en=!en;setLang(en)});})();
+</script><script id="vjg-universal-language">
+(()=> {
+ const button=document.getElementById('langSwitch');
+ if(!button||button.dataset.vjgUniversal==='1')return;
+ button.dataset.vjgUniversal='1';
+ let english=document.documentElement.lang==='en';
+ const original=new WeakMap(), originalAttrs=new WeakMap();
+ const normalize=s=>String(s||'').replace(/\s+/g,' ').trim();
+ function dict(){return window.VJG_TRANSLATIONS||{}}
+ function translated(s){const m=dict(),k=normalize(s);return Object.prototype.hasOwnProperty.call(m,k)?m[k]:s}
+ function walk(root,fn){
+   if(root.nodeType===Node.TEXT_NODE){fn(root);return}
+   if(!root.querySelectorAll)return;
+   const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+   const list=[];while(w.nextNode())list.push(w.currentNode);list.forEach(fn);
+ }
+ function apply(root){
+   walk(root,n=>{
+     if(!original.has(n))original.set(n,n.nodeValue);
+     const src=original.get(n);
+     if(!src.trim())return;
+     const key=normalize(src),m=dict();
+     if(english && Object.prototype.hasOwnProperty.call(m,key)){
+       const lead=(src.match(/^\s*/)||[''])[0],trail=(src.match(/\s*$/)||[''])[0];
+       n.nodeValue=lead+m[key]+trail;
+     } else n.nodeValue=src;
+   });
+   if(root.querySelectorAll){
+     root.querySelectorAll('input[placeholder],textarea[placeholder],input[aria-label],button[aria-label],img[alt],option').forEach(el=>{
+       ['placeholder','aria-label','alt'].forEach(a=>{
+         if(!el.hasAttribute(a))return;
+         let rec=originalAttrs.get(el);if(!rec){rec={};originalAttrs.set(el,rec)}
+         if(!(a in rec))rec[a]=el.getAttribute(a);
+         el.setAttribute(a,english?translated(rec[a]):rec[a]);
+       });
+       if(el.tagName==='OPTION'){
+         let rec=originalAttrs.get(el);if(!rec){rec={};originalAttrs.set(el,rec)}
+         if(!('text' in rec))rec.text=el.textContent;
+         el.textContent=english?translated(rec.text):rec.text;
+       }
+     });
+   }
+   document.documentElement.lang=english?'en':'es';
+   button.textContent=english?'🇲🇽 Español':'🇺🇸 English';
+ }
+ button.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();english=!english;apply(document.body)},true);
+ const observer=new MutationObserver(records=>{for(const record of records)if(record.type==='childList')record.addedNodes.forEach(n=>{if(n.nodeType===1||n.nodeType===3)apply(n)})});
+ observer.observe(document.body,{childList:true,subtree:true});
+ apply(document.body);
+})();
 </script></body></html>
