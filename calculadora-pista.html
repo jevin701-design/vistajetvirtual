@@ -3,34 +3,98 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<title>Runway Calculator | VistaJet Group</title>
+<title>Calculadora de pista | VistaJet Group</title>
 <style>
-:root{--r:#e31837;--bg:#17191d;--p:#22252b;--s:#c7cbd1;--m:#9ba2ad}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f7f7f7;font:16px/1.6 Inter,Segoe UI,Arial,sans-serif;border-left:5px solid var(--r)}a{color:inherit;text-decoration:none}.wrap{max-width:1000px;margin:auto;padding:28px}header{border-bottom:1px solid #393d45;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}.brand{font-weight:900;letter-spacing:2px}.brand span{color:var(--r)}nav{display:flex;gap:18px;flex-wrap:wrap;color:var(--s);font-size:14px}.eyebrow{color:var(--r);letter-spacing:2px;font-weight:800;font-size:12px}h1{font-size:clamp(36px,6vw,58px);line-height:1.05;margin:16px 0}.panel{background:var(--p);border:1px solid #3b3f47;border-top:3px solid var(--r);padding:24px;margin:22px 0}p,label{color:var(--s)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field{display:flex;flex-direction:column;gap:6px}.field input,.field select{width:100%;background:#17191d;color:#f7f7f7;border:1px solid #525761;border-radius:3px;padding:12px;font:inherit}.btn{display:inline-block;padding:12px 16px;background:var(--r);font-weight:800;margin-top:16px;border:0;color:#fff;cursor:pointer}.result{border:1px solid #454a54;padding:18px;margin-top:18px;background:#191b20}.result strong{color:var(--r);font-size:26px}.alert{margin:12px 0;padding:12px 14px;border:1px solid;font-weight:800}.bad{color:#ff4d5d;background:#35171c;border-color:#e31837}.good{color:#57e389;background:#153022;border-color:#25a95a}.muted{color:var(--m);font-size:13px}footer{border-top:3px solid var(--r);padding:25px 28px;color:var(--m);margin-top:50px}@media(max-width:700px){.wrap{padding:20px}header{padding:16px 20px}.grid{grid-template-columns:1fr}}
-</style></head>
-<body><header><a class="brand" href="index.html">VISTA<span>JET</span> GROUP</a><nav><a href="index.html">Inicio</a><a href="fleet.html">Flota</a><a href="hubs.html">Hubs</a><a href="generador-vuelos.html">Generador de vuelos</a></nav></header>
-<main class="wrap"><div class="eyebrow">VJG · FLIGHT OPERATIONS</div><h1>Runway Calculator</h1><p>Calculadora orientativa para estimar necesidades de pista en Infinite Flight. Evalúa peso, elevación, temperatura, viento, superficie y longitud disponible; no sustituye las tablas de rendimiento del avión.</p>
-<section class="panel"><h2>Datos de aeropuerto y aeronave</h2>
+:root{--r:#e31837;--bg:#17191d;--p:#22252b;--s:#c7cbd1;--m:#9ba2ad;--line:#3b3f47}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f7f7f7;font:16px/1.6 Inter,Segoe UI,Arial,sans-serif;border-left:5px solid var(--r)}a{color:inherit;text-decoration:none}header{border-bottom:1px solid var(--line);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}.brand{font-weight:900;letter-spacing:2px}.brand span,.eyebrow,.accent{color:var(--r)}nav{display:flex;gap:18px;flex-wrap:wrap;color:var(--s);font-size:14px}.wrap{max-width:1000px;margin:auto;padding:28px}.eyebrow{letter-spacing:2px;font-weight:800;font-size:12px}h1{font-size:clamp(36px,6vw,58px);line-height:1.05;margin:16px 0}h2{margin-top:0}.panel{background:var(--p);border:1px solid var(--line);border-top:3px solid var(--r);padding:24px;margin:22px 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field input,.field select{width:100%;background:#17191d;color:#f7f7f7;border:1px solid #525761;border-radius:3px;padding:12px;font:inherit}.field label{color:var(--s)}.btn{display:inline-block;padding:12px 16px;background:var(--r);font-weight:800;margin-top:16px;border:0;color:#fff;cursor:pointer}.result{border:1px solid #454a54;padding:18px;margin-top:18px;background:#191b20;overflow-wrap:anywhere}.result strong{color:var(--r);font-size:22px}.alert{margin:12px 0;padding:12px 14px;border:1px solid;font-weight:800}.bad{color:#ff6571;background:#35171c;border-color:var(--r)}.good{color:#57e389;background:#153022;border-color:#25a95a}.muted{color:var(--m);font-size:13px}.summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}.metric{border:1px solid #454a54;padding:14px;background:#202329}.metric span{display:block;color:var(--m);font-size:12px}.metric b{font-size:20px}.small{font-size:12px;color:var(--m)}footer{border-top:3px solid var(--r);padding:25px 28px;color:var(--m);margin-top:50px}@media(max-width:700px){.wrap{padding:20px}header{padding:16px 20px}.grid{grid-template-columns:1fr}.summary{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><a class="brand" href="index.html">VISTA<span>JET</span> GROUP</a><nav><a href="index.html">Inicio</a><a href="fleet.html">Flota</a><a href="hubs.html">Hubs</a><a href="generador-vuelos.html">Generador de vuelos</a><a href="calculadora-pista.html" aria-current="page">Calculadora de pista</a></nav></header>
+<main class="wrap"><div class="eyebrow">VJG · FLIGHT OPERATIONS</div><h1>Calculadora de pista</h1><p>Selecciona la aeronave y registra únicamente la carga y el combustible que vas a llevar. La calculadora añade el peso operativo de referencia del modelo y estima la autonomía con un consumo horario aproximado.</p>
+<section class="panel">
+<h2>1 · Aeronave y carga</h2>
 <div class="grid">
-<div class="field"><label for="icao">Aeropuerto ICAO</label><input id="icao" value="FAOR" maxlength="4"></div>
-<div class="field"><label for="elev">Elevación (ft)</label><input id="elev" type="number" value="5558"></div>
-<div class="field"><label for="temp">Temperatura (°C)</label><input id="temp" type="number" value="28"></div>
-<div class="field"><label for="qnh">QNH (hPa)</label><input id="qnh" type="number" value="1021"></div>
-<div class="field"><label for="windDir">Viento: dirección (°)</label><input id="windDir" type="number" value="330"></div>
-<div class="field"><label for="windSpeed">Viento (kt)</label><input id="windSpeed" type="number" value="8"></div>
-<div class="field"><label for="heading">Rumbo de pista (°)</label><input id="heading" type="number" value="30"></div>
+<div class="field"><label for="aircraft">Aeronave VJG</label><select id="aircraft"><option value="777f">Boeing 777F · IF-FVZV</option><option value="challenger">Bombardier Challenger 350 · IF-DUOA</option><option value="a380">Airbus A380-800 · IF-JNPB</option></select></div>
+<div class="field"><label for="flaps">Flaps de despegue</label><select id="flaps"></select></div>
+<div class="field"><label for="cargo">Peso de carga (kg)</label><input id="cargo" type="number" min="0" step="100" value="50000"></div>
+<div class="field"><label for="fuel">Combustible cargado (kg)</label><input id="fuel" type="number" min="0" step="100" value="60000"></div>
+</div>
+<div class="result" id="weightSummary" aria-live="polite"></div>
+<p class="muted">El peso operativo vacío es una referencia automática del modelo, no un campo que tengas que conocer. El peso total se calcula como: peso operativo + carga + combustible. Los límites mostrados son los perfiles de referencia registrados para VJG/Infinite Flight.</p>
+</section>
+<section class="panel">
+<h2>2 · Aeropuerto y pista</h2>
+<div class="grid">
+<div class="field"><label for="icao">Código ICAO</label><input id="icao" maxlength="4" value="FAOR" autocomplete="off" placeholder="KJFK"></div>
+<div class="field"><label for="runway">Designador de pista</label><input id="runway" maxlength="3" value="03L" placeholder="Ej. 13R"></div>
+<div class="field"><label for="elev">Elevación del aeropuerto (ft)</label><input id="elev" type="number" value="5558"></div>
 <div class="field"><label for="length">Longitud disponible (ft)</label><input id="length" type="number" value="14518"></div>
-<div class="field"><label for="width">Ancho de pista (ft)</label><input id="width" type="number" value="196"></div>
+<div class="field"><label for="width">Ancho de pista (ft)</label><input id="width" type="number" value="200"></div>
+<div class="field"><label for="heading">Rumbo de pista (°)</label><input id="heading" type="number" value="30"></div>
+</div>
+<p class="muted">El código ICAO y la pista se registran aquí; esta versión no descarga automáticamente la base de datos aeroportuaria. Confirma designador, longitud y elevación con una fuente aeronáutica actualizada.</p>
+</section>
+<section class="panel">
+<h2>3 · Condiciones ambientales</h2>
+<div class="grid">
+<div class="field"><label for="temp">Temperatura (°C)</label><input id="temp" type="number" value="27"></div>
+<div class="field"><label for="qnh">QNH (hPa)</label><input id="qnh" type="number" value="1013.25" step="0.1"></div>
+<div class="field"><label for="windDir">Dirección del viento (°)</label><input id="windDir" type="number" value="340"></div>
+<div class="field"><label for="windSpeed">Velocidad del viento (kt)</label><input id="windSpeed" type="number" value="9"></div>
 <div class="field"><label for="surface">Superficie</label><select id="surface"><option value="asphalt">Asfalto</option><option value="concrete">Concreto</option><option value="other">Otra</option></select></div>
-<div class="field"><label for="condition">Estado</label><select id="condition"><option value="dry">Seca</option><option value="wet">Mojada</option></select></div>
-<div class="field"><label for="weight">Peso total al despegue (kg)</label><input id="weight" type="number" value="391114"></div>
-<div class="field"><label for="mtow">MTOW de referencia (kg)</label><input id="mtow" type="number" value="347810"></div>
-<div class="field"><label for="fuel">Combustible cargado (kg)</label><input id="fuel" type="number" value="144998"></div>
-<div class="field"><label for="cargo">Carga (kg)</label><input id="cargo" type="number" value="107103"></div>
-<div class="field"><label for="aircraft">Aeronave VJG</label><select id="aircraft"><option value="777f" selected>Boeing 777F · IF-FVZV</option><option value="challenger">Bombardier Challenger 350 · IF-DUOA</option><option value="a380">Airbus A380-800 · IF-JNPB</option></select></div>
-<div class="field"><label for="phase">Cálculo</label><select id="phase"><option value="takeoff">Despegue</option><option value="landing">Aterrizaje</option></select></div>
-</div><button class="btn" id="calculate" type="button">Evaluar configuración</button>
-<div class="result" id="result" aria-live="polite">Introduce los datos y pulsa evaluar.</div>
-<p class="muted">Importante: esta herramienta no inventa una distancia exacta de despegue o aterrizaje. Sin un modelo de rendimiento validado para la física de Infinite Flight, indica límites de peso, componente de viento, altitud-densidad aproximada y compara la longitud de pista disponible. El resultado es orientativo, no una garantía de que la aeronave pueda operar.</p></section></main><footer>© VistaJet Group Virtual · VJG</footer>
+<div class="field"><label for="condition">Estado de la pista</label><select id="condition"><option value="dry">Seca</option><option value="wet">Mojada</option><option value="contaminated">Contaminada</option></select></div>
+</div>
+<button class="btn" id="calculate" type="button">Calcular rendimiento</button>
+<div class="result" id="result" aria-live="polite">Selecciona la aeronave e introduce carga, combustible y condiciones para evaluar la configuración.</div>
+<p class="muted">Las velocidades V1, VR y V2 no se mostrarán como calculadas hasta disponer de un modelo calibrado y reproducible para cada aeronave en Infinite Flight. Esta herramienta evalúa peso, combustible, autonomía orientativa y condiciones generales; no certifica que la pista sea suficiente.</p>
+</section>
+</main><footer>© VistaJet Group Virtual · VJG</footer>
 <script>
-(()=>{const $=id=>document.getElementById(id);const n=id=>Number($(id).value);const specs={'777f':{name:'Boeing 777F · IF-FVZV',mtow:297500,mlw:213180,range:4968},'challenger':{name:'Bombardier Challenger 350 · IF-DUOA',mtow:18416,mlw:15490,range:3200},'a380':{name:'Airbus A380-800 · IF-JNPB',mtow:560000,mlw:386000,range:7991}};let baseWeight=0;function syncBase(){baseWeight=n('weight')-n('fuel')-n('cargo');}function updateTotalWeight(){const total=baseWeight+n('fuel')+n('cargo');$('weight').value=Math.round(total);}function applyAircraft(){const s=specs[$('aircraft').value];$('mtow').value=s.mtow;const currentWeight=n('weight');if(!currentWeight||(currentWeight===391114&&$('aircraft').value!=='777f'))$('weight').value=s.mtow;syncBase();}applyAircraft();$('weight').addEventListener('change',syncBase);$('fuel').addEventListener('input',updateTotalWeight);$('cargo').addEventListener('input',updateTotalWeight);$('aircraft').addEventListener('change',()=>{const s=specs[$('aircraft').value];$('mtow').value=s.mtow;if($('aircraft').value==='777f'){$('weight').value=391114;$('fuel').value=144998;$('cargo').value=107103}else if($('aircraft').value==='challenger'){$('weight').value=18416;$('fuel').value=5000;$('cargo').value=1000}else{$('weight').value=560000;$('fuel').value=200000;$('cargo').value=100000}syncBase();});$('calculate').addEventListener('click',()=>{const aircraft=$('aircraft').value,s=specs[aircraft],elev=n('elev'),temp=n('temp'),qnh=n('qnh'),wd=n('windDir'),ws=n('windSpeed'),hdg=n('heading'),len=n('length'),weight=n('weight'),mtow=n('mtow'),fuel=n('fuel'),cargo=n('cargo');if([elev,temp,qnh,wd,ws,hdg,len,weight,mtow,fuel,cargo].some(v=>!Number.isFinite(v))||len<=0||mtow<=0||weight<=0||fuel<0||cargo<0){$('result').innerHTML='<div class="alert bad">Revisa los datos: peso y pista deben ser positivos; combustible y carga no pueden ser negativos.</div>';return}const diff=(wd-hdg)*Math.PI/180,headwind=ws*Math.cos(diff),crosswind=Math.abs(ws*Math.sin(diff));const pressureAlt=elev+(1013.25-qnh)*27;const isaTemp=15-1.98*(elev/1000);const densityAlt=pressureAlt+120*(temp-isaTemp);const excess=weight-mtow;const massOk=excess<=0;const condition=$('condition').value,surface=$('surface').value;const runwayFt=len,runwayM=Math.round(len*0.3048);let html='<p><b>Aeronave seleccionada:</b> '+s.name+'</p><p><b>Aeropuerto:</b> '+$('icao').value.toUpperCase()+' · <b>Pista:</b> '+Math.round(hdg).toString().padStart(3,'0')+' · <b>Disponible:</b> '+runwayFt.toLocaleString()+' ft ('+runwayM.toLocaleString()+' m)</p>';html+='<h3>Comparación con la ficha técnica de Infinite Flight</h3><p><b>MTOW de ficha:</b> '+s.mtow.toLocaleString()+' kg · <b>Peso ingresado:</b> '+Math.round(weight).toLocaleString()+' kg</p>';html+='<div class="alert '+(massOk?'good':'bad')+'">'+(massOk?'PESO DENTRO DEL MTOW':'EXCESO DE PESO: '+Math.round(excess).toLocaleString()+' kg ('+(excess/s.mtow*100).toFixed(1)+'% sobre MTOW')+'</div>';html+='<p><b>MLW de ficha:</b> '+s.mlw.toLocaleString()+' kg · <b>Alcance de ficha:</b> '+s.range.toLocaleString()+' NM</p>';html+='<p><b>Altitud de presión estimada:</b> '+Math.round(pressureAlt).toLocaleString()+' ft · <b>Altitud-densidad aproximada:</b> '+Math.round(densityAlt).toLocaleString()+' ft</p>';html+='<p><b>Componente de viento:</b> '+(headwind>=0?Math.abs(headwind).toFixed(1)+' kt de frente':Math.abs(headwind).toFixed(1)+' kt de cola')+' · <b>Componente cruzada:</b> '+crosswind.toFixed(1)+' kt</p>';html+='<p><b>Combustible:</b> '+Math.round(fuel).toLocaleString()+' kg · <b>Carga:</b> '+Math.round(cargo).toLocaleString()+' kg · <b>Superficie:</b> '+surface+' · <b>Estado:</b> '+condition+'</p>';if(!massOk){const need=Math.ceil(excess);const fuelCut=Math.min(fuel,need);const cargoCut=Math.min(cargo,need);const remainingFuel=Math.max(0,need-fuelCut);const remainingCargo=Math.max(0,need-cargoCut);let recommendation='<div class="alert bad">EXCESO DE PESO: debes reducir al menos '+need.toLocaleString()+' kg para quedar dentro del MTOW.</div><h3>Recomendación para corregir el peso</h3>';if(cargo>=need){recommendation+='<p><b>Opción 1 — reducir carga:</b> retira '+need.toLocaleString()+' kg de carga. Combustible sin cambios: '+Math.round(fuel).toLocaleString()+' kg.</p>';}else if(fuel>=need){recommendation+='<p><b>Opción 1 — reducir combustible:</b> quita '+need.toLocaleString()+' kg de combustible. Quedarían '+Math.round(fuel-need).toLocaleString()+' kg. Hazlo solo si sigues conservando el combustible necesario para la ruta y las reservas.</p>';}else{recommendation+='<p><b>Opción 1 — reducción combinada:</b> quita '+Math.round(fuel).toLocaleString()+' kg de combustible y '+Math.round(need-fuel).toLocaleString()+' kg de carga.</p>';}if(fuel>=need&&cargo>=need){recommendation+='<p><b>Opción 2 — reducir combustible:</b> quita '+need.toLocaleString()+' kg de combustible; quedarían '+Math.round(fuel-need).toLocaleString()+' kg. Verifica primero las reservas de vuelo.</p>';}recommendation+='<p><b>Peso objetivo máximo:</b> '+Math.round(mtow).toLocaleString()+' kg. <b>Peso actual:</b> '+Math.round(weight).toLocaleString()+' kg.</p><p class="muted">La calculadora no conoce la ruta, las reservas ni el peso mínimo de combustible requerido; por eso presenta la reducción matemática necesaria, no autoriza a volar con menos combustible del requerido.</p>';html+=recommendation+'<div class="alert bad">No uses la longitud de pista para justificar un peso superior al MTOW de la ficha del simulador.</div>';}else html+='<div class="alert '+(densityAlt>8000||headwind<0||condition==='wet'?'bad':'good')+'">'+(densityAlt>8000?'Altitud-densidad elevada: el rendimiento de despegue puede verse significativamente reducido.':headwind<0?'Viento de cola: puede aumentar la distancia requerida.':condition==='wet'?'Pista mojada: el rendimiento puede empeorar.':'Peso dentro del MTOW; todavía debe validarse la distancia de pista.')+'</div>';html+='<p class="muted">La calculadora compara el peso con la ficha de Infinite Flight. No calcula una distancia exacta de despegue/aterrizaje porque no hay un modelo de rendimiento validado del simulador conectado. La MLW se muestra como referencia; para validarla hace falta el peso de aterrizaje.</p>';$('result').innerHTML=html})})();
-</script></body></html>
+(()=> {
+ const $=id=>document.getElementById(id);
+ const n=id=>Number($(id).value);
+ const fmt=v=>Math.round(v).toLocaleString('es-MX');
+ const specs={
+  '777f':{name:'Boeing 777F · IF-FVZV',oew:144000,mtow:297500,mlw:213180,fuelCapacity:145540,burn:7000,range:4968,flaps:['5','15','20'],defaultFuel:60000,defaultCargo:50000,source:'Consumo de crucero provisional: 7.000 kg/h, estimación externa; no es un valor confirmado del modelo de Infinite Flight.'},
+  'challenger':{name:'Bombardier Challenger 350 · IF-DUOA',oew:11000,mtow:18416,mlw:15490,fuelCapacity:6350,burn:853,range:3200,flaps:['10','20'],defaultFuel:4000,defaultCargo:1000,source:'Consumo de crucero de referencia: aproximadamente 853 kg/h; puede variar con altitud, peso y potencia.'},
+  'a380':{name:'Airbus A380-800 · IF-JNPB',oew:277000,mtow:560000,mlw:386000,fuelCapacity:254760,burn:15300,range:7991,flaps:['1+F','2','3'],defaultFuel:100000,defaultCargo:50000,source:'Consumo de crucero provisional: aproximadamente 15.300 kg/h, estimación calculada a partir de capacidad y alcance nominales; no es un valor confirmado del modelo de Infinite Flight.'}
+ };
+ function updateAircraft(reset){
+  const s=specs[$('aircraft').value],old=$('flaps').value;
+  $('flaps').innerHTML=s.flaps.map(f=>'<option value="'+f+'">Flaps '+f+'</option>').join('');
+  if(s.flaps.includes(old))$('flaps').value=old;
+  if(reset){$('cargo').value=s.defaultCargo;$('fuel').value=s.defaultFuel;}
+  updateWeight();
+ }
+ function updateWeight(){
+  const s=specs[$('aircraft').value],cargo=n('cargo'),fuel=n('fuel'),total=s.oew+cargo+fuel;
+  $('weightSummary').innerHTML='<div class="summary"><div class="metric"><span>Peso operativo de referencia</span><b>'+fmt(s.oew)+' kg</b></div><div class="metric"><span>Peso total estimado</span><b>'+fmt(total)+' kg</b></div><div class="metric"><span>MTOW de VJG/IF</span><b>'+fmt(s.mtow)+' kg</b></div></div><p><b>Desglose:</b> '+fmt(s.oew)+' kg operativo + '+fmt(cargo)+' kg carga + '+fmt(fuel)+' kg combustible = <b>'+fmt(total)+' kg</b>.</p><p><b>Capacidad máxima de combustible de referencia:</b> '+fmt(s.fuelCapacity)+' kg.</p>';
+  if(fuel>s.fuelCapacity)$('weightSummary').innerHTML+='<div class="alert bad">El combustible introducido supera la capacidad de referencia en '+fmt(fuel-s.fuelCapacity)+' kg.</div>';
+  else if(total>s.mtow)$('weightSummary').innerHTML+='<div class="alert bad">El peso total supera el MTOW en '+fmt(total-s.mtow)+' kg.</div>';
+  else $('weightSummary').innerHTML+='<div class="alert good">Peso total dentro del MTOW de referencia.</div>';
+ }
+ $('aircraft').addEventListener('change',()=>updateAircraft(true));
+ ['cargo','fuel'].forEach(id=>$(id).addEventListener('input',updateWeight));
+ $('calculate').addEventListener('click',()=>{
+  const key=$('aircraft').value,s=specs[key],cargo=n('cargo'),fuel=n('fuel'),total=s.oew+cargo+fuel;
+  const elev=n('elev'),temp=n('temp'),qnh=n('qnh'),wd=n('windDir'),ws=n('windSpeed'),hdg=n('heading'),len=n('length');
+  const invalid=[cargo,fuel,elev,temp,qnh,wd,ws,hdg,len,n('width')].some(v=>!Number.isFinite(v))||cargo<0||fuel<0||elev<0||ws<0||len<=0||n('width')<=0||wd<0||wd>360||hdg<0||hdg>360||qnh<=0;
+  if(invalid){$('result').innerHTML='<div class="alert bad">Revisa los datos introducidos. Carga y combustible no pueden ser negativos; pista, ancho y QNH deben ser positivos.</div>';return;}
+  const hours=fuel/s.burn,mins=Math.round((hours%1)*60),headwind=ws*Math.cos((wd-hdg)*Math.PI/180),crosswind=Math.abs(ws*Math.sin((wd-hdg)*Math.PI/180));
+  const pressureAlt=elev+(1013.25-qnh)*27,isaTemp=15-1.98*(elev/1000),densityAlt=pressureAlt+120*(temp-isaTemp);
+  let html='<p><b>Aeronave:</b> '+s.name+'</p><p><b>Aeropuerto:</b> '+$('icao').value.trim().toUpperCase()+' · <b>Pista:</b> '+$('runway').value.trim().toUpperCase()+' · <b>Longitud:</b> '+fmt(len)+' ft ('+fmt(len*0.3048)+' m)</p>';
+  html+='<div class="summary"><div class="metric"><span>Peso total</span><b>'+fmt(total)+' kg</b></div><div class="metric"><span>Autonomía teórica</span><b>'+Math.floor(hours)+' h '+mins+' min</b></div><div class="metric"><span>Alcance de referencia</span><b>'+fmt(s.range)+' NM</b></div></div>';
+  html+='<p><b>Consumo estimado en crucero:</b> '+fmt(s.burn)+' kg/h.</p><p><b>Combustible introducido:</b> '+fmt(fuel)+' kg. <b>Autonomía matemática:</b> combustible ÷ consumo horario. No incluye reservas, rodaje, ascenso, descenso, desvíos ni combustible de contingencia.</p><p class="muted">'+s.source+'</p>';
+  html+='<h3>Comprobaciones</h3><p><b>MTOW:</b> '+fmt(s.mtow)+' kg · <b>MLW:</b> '+fmt(s.mlw)+' kg (referencia para el aterrizaje).</p>';
+  if(fuel>s.fuelCapacity)html+='<div class="alert bad">El combustible supera la capacidad de referencia por '+fmt(fuel-s.fuelCapacity)+' kg.</div>';
+  if(total>s.mtow)html+='<div class="alert bad">PESO EXCESIVO: supera el MTOW por '+fmt(total-s.mtow)+' kg. Reduce carga o combustible y vuelve a calcular.</div>';
+  else html+='<div class="alert good">El peso total calculado está dentro del MTOW de referencia.</div>';
+  html+='<p><b>Altitud de presión estimada:</b> '+fmt(pressureAlt)+' ft · <b>Altitud-densidad aproximada:</b> '+fmt(densityAlt)+' ft.</p><p><b>Componente de viento:</b> '+(headwind>=0?fmt(headwind)+' kt de frente':fmt(Math.abs(headwind))+' kt de cola')+' · <b>Componente cruzada:</b> '+fmt(crosswind)+' kt.</p><p><b>Flaps seleccionados:</b> '+$('flaps').value+' · <b>Superficie:</b> '+$('surface').selectedOptions[0].text+' · <b>Estado:</b> '+$('condition').selectedOptions[0].text+'.</p>';
+  if(total-s.fuel> s.mlw)html+='<p class="muted">El peso de aterrizaje no se puede validar solo con el peso de despegue: depende del combustible que quede al llegar. La MLW se muestra como límite de referencia.</p>';
+  html+='<p class="muted">La autonomía es una estimación teórica de crucero, no una predicción de duración de ruta. El consumo horario no está calibrado con telemetría de Infinite Flight. No se calcula distancia exacta de despegue ni se certifica la compatibilidad de pista.</p>';
+  $('result').innerHTML=html;
+ });
+ updateAircraft(false);
+})();
+</script>
+</body></html>
