@@ -40,23 +40,27 @@ footer{border-top:3px solid var(--r);padding:25px 28px;color:var(--m);margin-top
 </section>
 
 <section class="panel" id="aircraftCalculator">
-<h2>Aircraft Range, Fuel & Payload Calculator</h2>
-<p class="muted">Calcula distancia frente al alcance de referencia y comprueba combustible, carga y peso máximo. El consumo real depende del perfil de vuelo; esta herramienta no inventa una cifra de consumo.</p>
+<h2>Boeing 777F — Real Aircraft Limits</h2>
+<p class="muted">Calculadora con referencias técnicas reales del 777F. El peso operativo vacío depende de la configuración de cada operador; el valor inicial es una estimación de referencia y se puede editar. El alcance publicado no garantiza que cualquier combinación de carga y combustible pueda cubrirlo.</p>
 <div class="formgrid">
-<div class="field"><label for="calcAircraft">Aircraft</label><select id="calcAircraft"><option value="777f">Boeing 777F · IF-FVZV</option><option value="challenger">Bombardier Challenger 350 · IF-DUOA</option><option value="a380">Airbus A380-800</option></select></div>
+<div class="field"><label for="calcAircraft">Aircraft</label><select id="calcAircraft"><option value="777f">Boeing 777F · IF-FVZV (real specs)</option></select></div>
 <div class="field"><label for="calcDistance">Route distance (NM)</label><input id="calcDistance" type="number" min="0" step="1" value="7952" required></div>
-<div class="field"><label for="calcEmpty">Empty/operating weight (kg)</label><input id="calcEmpty" type="number" min="0" step="1" value="139012" required></div>
-<div class="field"><label for="calcMtow">Maximum takeoff weight — MTOW (kg)</label><input id="calcMtow" type="number" min="1" step="1" value="347815" required></div>
-<div class="field"><label for="calcFuel">Fuel loaded (kg)</label><input id="calcFuel" type="number" min="0" step="1" max="145000" value="145000" required></div>
-<div class="field"><label for="calcMain">Main cargo (kg)</label><input id="calcMain" type="number" min="0" step="1" value="25156" required></div>
-<div class="field"><label for="calcFront">Front cargo (kg)</label><input id="calcFront" type="number" min="0" step="1" value="2453" required></div>
-<div class="field"><label for="calcBack">Back cargo (kg)</label><input id="calcBack" type="number" min="0" step="1" value="2453" required></div>
-<div class="field"><label for="calcRange">Aircraft reference range (NM)</label><input id="calcRange" type="number" min="1" step="1" value="4968" required></div>
+<div class="field"><label for="calcEmpty">Operating empty weight reference (kg)</label><input id="calcEmpty" type="number" min="0" step="1" value="141115" required></div>
+<div class="field"><label for="calcMtow">Maximum takeoff weight — MTOW (kg)</label><input id="calcMtow" type="number" min="1" step="1" value="347810" required></div>
+<div class="field"><label for="calcMlw">Maximum landing weight — MLW (kg)</label><input id="calcMlw" type="number" min="1" step="1" value="260820" required></div>
+<div class="field"><label for="calcMZfw">Maximum zero-fuel weight — MZFW (kg)</label><input id="calcMZfw" type="number" min="1" step="1" value="248115" required></div>
+<div class="field"><label for="calcFuelCap">Maximum usable fuel capacity (kg)</label><input id="calcFuelCap" type="number" min="1" step="1" value="145540" required></div>
+<div class="field"><label for="calcFuel">Fuel loaded (kg)</label><input id="calcFuel" type="number" min="0" step="1" max="145540" value="132768" required></div>
+<div class="field"><label for="calcFuelLanding">Estimated fuel remaining at landing (kg)</label><input id="calcFuelLanding" type="number" min="0" step="1" value="20000" required></div>
+<div class="field"><label for="calcMain">Main cargo (kg)</label><input id="calcMain" type="number" min="0" step="1" value="50608" required></div>
+<div class="field"><label for="calcFront">Front cargo (kg)</label><input id="calcFront" type="number" min="0" step="1" value="4936" required></div>
+<div class="field"><label for="calcBack">Back cargo (kg)</label><input id="calcBack" type="number" min="0" step="1" value="4936" required></div>
+<div class="field"><label for="calcRange">Published reference range (NM)</label><input id="calcRange" type="number" min="1" step="1" value="5000" required></div>
 </div>
 <button class="btn" type="button" id="calcRun">Calculate</button>
-<div class="result" id="calcResult" aria-live="polite"><span class="muted">Enter the route and aircraft loading, then calculate.</span></div>
+<div class="result" id="calcResult" aria-live="polite"><span class="muted">Enter route, fuel and cargo, then calculate.</span></div>
+<p class="muted">Reference basis: Boeing 777F, 5,000 NM published range, 107 t structural payload, MTOW 347,810 kg, MLW 260,820 kg, MZFW 248,115 kg and usable fuel capacity 145,540 kg. The exact OEW depends on the aircraft configuration. Validate performance charts, fuel reserves, alternate airports, weather and landing weight before operational use.</p>
 </section>
-
 <section class="panel"><h2>Numbering Ranges</h2><div class="range">VJT 100–499</div><p><strong>Private Aviation:</strong> private and executive flights. The region is determined by the departure airport.</p><div class="range">VJT 500–899</div><p><strong>Cargo Operations:</strong> cargo transportation. The region is determined by the departure airport.</p><div class="range">VJT 900–999</div><p><strong>Charter Operations:</strong> global range assigned consecutively, without regional subdivisions.</p></section>
 <section class="panel"><h2>Identification Rules</h2><ul><li>Operational prefix: VJT.</li><li>OUT and RET are recorded separately; they are not added to the number.</li><li>The number must be unique across active routes.</li><li>Private Aviation and Cargo use the departure airport’s region.</li><li>Use ICAO codes and validate aircraft and airport capabilities.</li></ul></section>
 <p><a href="index.html">← Back to Home</a></p>
@@ -69,20 +73,12 @@ footer{border-top:3px solid var(--r);padding:25px 28px;color:var(--m);margin-top
 <script>
 (()=> {
 const $=id=>document.getElementById(id);
-const aircraftRanges={ '777f':4968, challenger:3200, a380:7991 };
-$('calcAircraft').addEventListener('change',()=>{
- const ranges=aircraftRanges[$('calcAircraft').value];
- if(ranges) $('calcRange').value=ranges;
- if($('calcAircraft').value==='777f'){$('calcMtow').value=347815;$('calcEmpty').value=139012;$('calcFuel').max=145000;}
- else if($('calcAircraft').value==='challenger'){$('calcMtow').value=17000;$('calcEmpty').value=11500;$('calcFuel').max=3000;}
- else {$('calcMtow').value=575000;$('calcEmpty').value=276800;$('calcFuel').max=250000;}
-});
 $('calcRun').addEventListener('click',()=>{
- const distance=Number($('calcDistance').value), empty=Number($('calcEmpty').value), mtow=Number($('calcMtow').value), fuel=Number($('calcFuel').value), main=Number($('calcMain').value), front=Number($('calcFront').value), back=Number($('calcBack').value), range=Number($('calcRange').value);
- if([distance,empty,mtow,fuel,main,front,back,range].some(v=>!Number.isFinite(v)||v<0)||mtow<=0||range<=0){$('calcResult').innerHTML='<p class="range-alert exceeded">Check the values entered.</p>';return;}
- const cargo=main+front+back,total=empty+fuel+cargo,weightOK=total<=mtow,rangeOK=distance<=range,margin=mtow-total;
+ const distance=Number($('calcDistance').value), empty=Number($('calcEmpty').value), mtow=Number($('calcMtow').value), mlw=Number($('calcMlw').value), mzfw=Number($('calcMZfw').value), fuelCap=Number($('calcFuelCap').value), fuel=Number($('calcFuel').value), fuelLanding=Number($('calcFuelLanding').value), main=Number($('calcMain').value), front=Number($('calcFront').value), back=Number($('calcBack').value), range=Number($('calcRange').value);
+ if([distance,empty,mtow,mlw,mzfw,fuelCap,fuel,fuelLanding,main,front,back,range].some(v=>!Number.isFinite(v)||v<0)||mtow<=0||mlw<=0||mzfw<=0||fuelCap<=0||range<=0){$('calcResult').innerHTML='<p class="range-alert exceeded">Check the values entered.</p>';return;}
+ const cargo=main+front+back,takeoff=empty+fuel+cargo,landing=empty+fuelLanding+cargo,zfw=empty+cargo,rangeOK=distance<=range,mtowOK=takeoff<=mtow,mlwOK=landing<=mlw,mzfwOK=zfw<=mzfw,fuelCapOK=fuel<=fuelCap,payloadOK=cargo<=107000;
  const alert=(ok,yes,no)=>'<div class="range-alert '+(ok?'within':'exceeded')+'">'+(ok?yes:no)+'</div>';
- $('calcResult').innerHTML='<p><b>Route distance:</b> '+Math.round(distance).toLocaleString()+' NM · <b>Reference range:</b> '+Math.round(range).toLocaleString()+' NM</p>'+alert(rangeOK,'DISTANCE WITHIN REFERENCE RANGE','EXCEEDS REFERENCE RANGE BY '+Math.round(distance-range).toLocaleString()+' NM')+'<p><b>Fuel:</b> '+Math.round(fuel).toLocaleString()+' kg</p><p><b>Total cargo:</b> '+Math.round(cargo).toLocaleString()+' kg</p><p><b>Calculated takeoff weight:</b> '+Math.round(total).toLocaleString()+' kg</p><p><b>MTOW:</b> '+Math.round(mtow).toLocaleString()+' kg</p>'+alert(weightOK,'WEIGHT WITHIN MTOW · MARGIN '+Math.round(margin).toLocaleString()+' kg','OVER MTOW BY '+Math.round(-margin).toLocaleString()+' kg')+'<p class="muted">This is a weight and published-range comparison, not a fuel-sufficiency prediction. Verify aircraft-specific operating empty weight, fuel capacity, reserves, payload/range charts, winds, alternates and simulator data.</p>';
+ $('calcResult').innerHTML='<p><b>Route distance:</b> '+Math.round(distance).toLocaleString()+' NM · <b>Boeing reference range:</b> '+Math.round(range).toLocaleString()+' NM</p>'+alert(rangeOK,'WITHIN PUBLISHED RANGE','EXCEEDS PUBLISHED RANGE BY '+Math.round(distance-range).toLocaleString()+' NM')+'<p><b>Fuel at takeoff:</b> '+Math.round(fuel).toLocaleString()+' / '+Math.round(fuelCap).toLocaleString()+' kg</p>'+alert(fuelCapOK,'FUEL CAPACITY OK','EXCEEDS FUEL CAPACITY BY '+Math.round(fuel-fuelCap).toLocaleString()+' kg')+'<p><b>Total cargo:</b> '+Math.round(cargo).toLocaleString()+' kg</p>'+alert(payloadOK,'CARGO WITHIN 107,000 KG STRUCTURAL PAYLOAD REFERENCE','CARGO EXCEEDS 107,000 KG STRUCTURAL PAYLOAD REFERENCE')+'<p><b>Zero-fuel weight (ZFW):</b> '+Math.round(zfw).toLocaleString()+' kg · <b>MZFW:</b> '+Math.round(mzfw).toLocaleString()+' kg</p>'+alert(mzfwOK,'ZFW WITHIN MZFW','ZFW EXCEEDS MZFW BY '+Math.round(zfw-mzfw).toLocaleString()+' kg')+'<p><b>Calculated takeoff weight:</b> '+Math.round(takeoff).toLocaleString()+' kg · <b>MTOW:</b> '+Math.round(mtow).toLocaleString()+' kg</p>'+alert(mtowOK,'TAKEOFF WEIGHT WITHIN MTOW · MARGIN '+Math.round(mtow-takeoff).toLocaleString()+' kg','OVER MTOW BY '+Math.round(takeoff-mtow).toLocaleString()+' kg')+'<p><b>Estimated landing weight:</b> '+Math.round(landing).toLocaleString()+' kg · <b>MLW:</b> '+Math.round(mlw).toLocaleString()+' kg</p>'+alert(mlwOK,'LANDING WEIGHT WITHIN MLW · MARGIN '+Math.round(mlw-landing).toLocaleString()+' kg','OVER MLW BY '+Math.round(landing-mlw).toLocaleString()+' kg')+'<p class="muted">Range is a published reference, not a guarantee for this payload. Landing weight uses the entered estimated fuel remaining. OEW varies by aircraft/operator configuration; edit the reference weight to match the aircraft documentation. Confirm actual Boeing payload-range charts, reserves, alternates and operational limits.</p>';
 });
 })();
 </script>
