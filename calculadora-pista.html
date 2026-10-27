@@ -9,7 +9,7 @@
 </style>
 </head>
 <body>
-<header><a class="brand" href="index.html">VISTA<span>JET</span> GROUP</a><nav><a href="index.html">Inicio</a><a href="fleet.html">Flota</a><a href="hubs.html">Hubs</a><a href="generador-vuelos.html">Generador de vuelos</a><a href="calculadora-pista.html" aria-current="page">Calculadora de pista</a></nav></header>
+<header><a class="brand" href="index.html">VISTA<span>JET</span> GROUP</a><nav><a href="index.html">Inicio</a><a href="fleet.html">Flota</a><a href="hubs.html">Hubs</a><a href="generador-vuelos.html">Generador de vuelos</a><a href="calculadora-pista.html" aria-current="page">Calculadora de pista</a><a href="calculadora-despegue-777f.html">Calculadora de despegue 777F</a></nav></header>
 <main class="wrap"><div class="eyebrow">VJG · FLIGHT OPERATIONS</div><h1>Calculadora de pista</h1><p>Selecciona la aeronave y registra únicamente la carga y el combustible que vas a llevar. La calculadora añade el peso operativo de referencia del modelo y estima la autonomía con un consumo horario aproximado.</p>
 <section class="panel">
 <h2>1 · Aeronave y carga</h2>
@@ -20,7 +20,7 @@
 <div class="field"><label for="fuel">Combustible cargado (kg)</label><input id="fuel" type="number" min="0" step="100" value="60000"></div>
 </div>
 <div class="result" id="weightSummary" aria-live="polite"></div>
-<p class="muted">El peso operativo vacío es una referencia automática del modelo, no un campo que tengas que conocer. El peso total se calcula como: peso operativo + carga + combustible. Los límites mostrados son los perfiles de referencia registrados para VJG/Infinite Flight.</p>
+<p class="muted">El peso vacío es una referencia automática del modelo, no un campo que tengas que conocer. El peso total se calcula como: peso operativo + carga + combustible. Los límites mostrados son los perfiles de referencia registrados para VJG/Infinite Flight.</p>
 </section>
 <section class="panel">
 <h2>2 · Aeropuerto y pista</h2>
@@ -55,7 +55,7 @@
  const n=id=>Number($(id).value);
  const fmt=v=>Math.round(v).toLocaleString('es-MX');
  const specs={
-  '777f':{name:'Boeing 777F · IF-FVZV',oew:144000,mtow:297500,mlw:213180,fuelCapacity:145540,burn:7000,range:4968,vSpeeds:{mtow:297500,b1:154,br:166,b2:176},flaps:['5','15','20'],defaultFuel:60000,defaultCargo:50000,source:'Consumo de crucero provisional: 7.000 kg/h, estimación externa; no es un valor confirmado del modelo de Infinite Flight.'},
+  '777f':{name:'Boeing 777F · IF-FVZV',oew:139010,mtow:297500,mlw:213180,fuelCapacity:145540,burn:7000,range:4968,vSpeeds:{mtow:297500,b1:154,br:166,b2:176},flaps:['5','15','20'],defaultFuel:60000,defaultCargo:50000,source:'Consumo de crucero provisional: 7.000 kg/h, estimación externa; no es un valor confirmado del modelo de Infinite Flight.'},
   'challenger':{name:'Bombardier Challenger 350 · IF-DUOA',oew:11000,mtow:18416,mlw:15490,fuelCapacity:6350,burn:853,range:3200,vSpeeds:{mtow:18416,b1:108,br:115,b2:123},flaps:['10','20'],defaultFuel:4000,defaultCargo:1000,source:'Consumo de crucero de referencia: aproximadamente 853 kg/h; puede variar con altitud, peso y potencia.'},
   'a380':{name:'Airbus A380-800 · IF-JNPB',oew:277000,mtow:560000,mlw:386000,fuelCapacity:254760,burn:15300,range:7991,vSpeeds:{mtow:560000,b1:150,br:165,b2:175},flaps:['1+F','2','3'],defaultFuel:100000,defaultCargo:50000,source:'Consumo de crucero provisional: aproximadamente 15.300 kg/h, estimación calculada a partir de capacidad y alcance nominales; no es un valor confirmado del modelo de Infinite Flight.'}
  };
@@ -68,7 +68,7 @@
  }
  function updateWeight(){
   const s=specs[$('aircraft').value],cargo=n('cargo'),fuel=n('fuel'),total=s.oew+cargo+fuel;
-  $('weightSummary').innerHTML='<div class="summary"><div class="metric"><span>Peso operativo de referencia</span><b>'+fmt(s.oew)+' kg</b></div><div class="metric"><span>Peso total estimado</span><b>'+fmt(total)+' kg</b></div><div class="metric"><span>MTOW de VJG/IF</span><b>'+fmt(s.mtow)+' kg</b></div></div><p><b>Desglose:</b> '+fmt(s.oew)+' kg operativo + '+fmt(cargo)+' kg carga + '+fmt(fuel)+' kg combustible = <b>'+fmt(total)+' kg</b>.</p><p><b>Capacidad máxima de combustible de referencia:</b> '+fmt(s.fuelCapacity)+' kg.</p>';
+  $('weightSummary').innerHTML='<div class="summary"><div class="metric"><span>Peso vacío de referencia</span><b>'+fmt(s.oew)+' kg</b></div><div class="metric"><span>Peso total estimado</span><b>'+fmt(total)+' kg</b></div><div class="metric"><span>MTOW de VJG/IF</span><b>'+fmt(s.mtow)+' kg</b></div></div><p><b>Desglose:</b> '+fmt(s.oew)+' kg operativo + '+fmt(cargo)+' kg carga + '+fmt(fuel)+' kg combustible = <b>'+fmt(total)+' kg</b>.</p><p><b>Capacidad máxima de combustible de referencia:</b> '+fmt(s.fuelCapacity)+' kg.</p>';
   if(fuel>s.fuelCapacity)$('weightSummary').innerHTML+='<div class="alert bad">El combustible introducido supera la capacidad de referencia en '+fmt(fuel-s.fuelCapacity)+' kg.</div>';
   else if(total>s.mtow)$('weightSummary').innerHTML+='<div class="alert bad">El peso total supera el MTOW en '+fmt(total-s.mtow)+' kg.</div>';
   else $('weightSummary').innerHTML+='<div class="alert good">Peso total dentro del MTOW de referencia.</div>';
