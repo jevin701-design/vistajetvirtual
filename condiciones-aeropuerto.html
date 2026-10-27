@@ -1,10 +1,220 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Airport Conditions | VistaJet Group</title>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script>try{var l=localStorage.getItem('vjg-lang');if(l==='en'||l==='es')document.documentElement.lang=l;}catch(e){}</script>
+<style>html[lang="es"] .vjg-en{display:none!important}html[lang="en"] .vjg-es{display:none!important}</style>
+<link rel="stylesheet" href="vjg-lang.css">
+<title data-es="Condiciones del aeropuerto | VistaJet Group" data-en="Airport Conditions | VistaJet Group">Condiciones del aeropuerto | VistaJet Group</title>
 <style>
-:root{--r:#e31837;--bg:#17191d;--p:#22252b;--s:#c7cbd1;--m:#9ba2ad}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f7f7f7;font:16px/1.6 Inter,Segoe UI,Arial,sans-serif;border-left:5px solid var(--r)}a{color:inherit;text-decoration:none}.wrap{max-width:1000px;margin:auto;padding:28px}header{border-bottom:1px solid #393d45;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}.brand{font-weight:900;letter-spacing:2px}.brand span,.eyebrow{color:var(--r)}nav{display:flex;gap:18px;flex-wrap:wrap;color:var(--s);font-size:14px}.eyebrow{letter-spacing:2px;font-weight:800;font-size:12px}h1{font-size:clamp(38px,6vw,60px);line-height:1.05;margin:16px 0}.panel{background:var(--p);border:1px solid #3b3f47;border-top:3px solid var(--r);padding:24px;margin:22px 0}p,label{color:var(--s)}.formgrid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px}.field{display:flex;flex-direction:column;gap:6px}.field input{width:100%;background:#17191d;color:#f7f7f7;border:1px solid #525761;border-radius:3px;padding:12px;font:inherit}.btn{padding:12px 16px;background:var(--r);font-weight:800;border:0;color:#fff;cursor:pointer;align-self:end}.muted{color:var(--m);font-size:13px}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card{border:1px solid #454a54;padding:16px;background:#191b20;min-width:0}.card h3{margin:0 0 8px}.card strong{color:var(--r)}.data-line{padding:8px 0;border-bottom:1px solid #353941;overflow-wrap:anywhere}.data-line:last-child{border-bottom:0}footer{border-top:3px solid var(--r);padding:25px 28px;color:var(--m);margin-top:50px}@media(max-width:700px){.wrap{padding:20px}header{padding:16px 20px}.cards{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr}.btn{align-self:stretch}}
-</style></head><body><header><a class="brand" href="index.html">VISTA<span>JET</span> GROUP</a><nav><a href="index.html">Home</a><a href="generador-vuelos.html">Flight Generator</a><a href="fleet.html">Fleet</a><a href="hubs.html">Hubs</a></nav></header>
-<main class="wrap"><div class="eyebrow">VJG · FLIGHT OPERATIONS</div><h1>Airport Conditions</h1><p>Look up basic airport details, runways, and available weather reports using its ICAO code.</p>
-<section class="panel"><form id="airportForm"><div class="formgrid"><div class="field"><label for="icao">Airport ICAO Code</label><input id="icao" maxlength="4" pattern="[A-Za-z]{4}" placeholder="MMLO" required autocomplete="off"></div><button class="btn" type="submit">Check Airport</button></div></form><div id="status" class="muted" aria-live="polite" style="margin-top:12px">Enter a four-letter ICAO code.</div></section>
-<div class="cards"><section class="card"><h3>Identification</h3><div id="airportData" class="muted">Not queried.</div></section><section class="card"><h3>Current Weather · METAR</h3><div id="weatherData" class="muted">Not queried.</div></section><section class="card"><h3>Runways</h3><div id="runwayData" class="muted">Not queried.</div></section><section class="card"><h3>Use of Information</h3><p class="muted">Information is for planning and simulation only. It does not replace official METAR/TAF, NOTAMs, aeronautical charts, or current operational documentation.</p><p class="muted">Data availability and updates depend on the sources consulted.</p></section></div><p><a href="generador-vuelos.html">← Back to the Flight Number Generator</a></p></main><footer>© VistaJet Group Virtual · VJG</footer>
+:root{--r:#e31837;--bg:#17191d;--p:#22252b;--s:#c7cbd1;--m:#9ba2ad}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f7f7f7;font:16px/1.6 Inter,Segoe UI,Arial,sans-serif;border-left:5px solid var(--r)}
+a{color:inherit;text-decoration:none}.wrap{max-width:1000px;margin:auto;padding:28px}
+header{border-bottom:1px solid #393d45;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.brand{font-weight:900;letter-spacing:2px}.brand span,.eyebrow{color:var(--r)}
+nav{display:flex;gap:18px;flex-wrap:wrap;color:var(--s);font-size:14px}
+.eyebrow{letter-spacing:2px;font-weight:800;font-size:12px}
+h1{font-size:clamp(38px,6vw,60px);line-height:1.05;margin:16px 0}
+.panel{background:var(--p);border:1px solid #3b3f47;border-top:3px solid var(--r);padding:24px;margin:22px 0}
+p,label{color:var(--s)}
+.formgrid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field input{width:100%;background:#17191d;color:#f7f7f7;border:1px solid #525761;border-radius:3px;padding:12px;font:inherit;text-transform:uppercase}
+.btn{padding:12px 16px;background:var(--r);font-weight:800;border:0;color:#fff;cursor:pointer;align-self:end}
+.muted{color:var(--m);font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{border:1px solid #454a54;padding:16px;background:#191b20;min-width:0}
+.card h3{margin:0 0 8px}
+.card strong{color:var(--r)}
+.data-line{padding:8px 0;border-bottom:1px solid #353941;overflow-wrap:anywhere}
+.data-line:last-child{border-bottom:0}
+.error{color:#ff8d9b}
+footer{border-top:3px solid var(--r);padding:25px 28px;color:var(--m);margin-top:50px}
+@media(max-width:700px){.wrap{padding:20px}header{padding:16px 20px}.cards{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr}.btn{align-self:stretch}}
+</style>
+</head>
+<body>
+<header>
+<a class="brand" href="index.html">VISTA<span>JET</span> GROUP</a>
+<div class="vjg-head-tools">
+<nav>
+<a href="index.html"><span class="vjg-es">Inicio</span><span class="vjg-en">Home</span></a>
+<a href="generador-vuelos.html"><span class="vjg-es">Generador</span><span class="vjg-en">Flight Generator</span></a>
+<a href="fleet.html"><span class="vjg-es">Flota</span><span class="vjg-en">Fleet</span></a>
+<a href="hubs.html">Hubs</a>
+</nav>
+<button class="vjg-lang-btn" id="vjgLangBtn" type="button"><span class="vjg-es">English</span><span class="vjg-en">Español</span></button>
+</div>
+</header>
+<main class="wrap">
+<div class="eyebrow">VJG · <span class="vjg-es">OPERACIONES</span><span class="vjg-en">FLIGHT OPERATIONS</span></div>
+<h1><span class="vjg-es">Condiciones del aeropuerto</span><span class="vjg-en">Airport Conditions</span></h1>
+<p><span class="vjg-es">Consulta datos básicos, pistas y el METAR disponible a partir del código OACI. Si una fuente no responde, se indica el fallo: no se inventan datos.</span><span class="vjg-en">Look up basic airport details, runways, and the available METAR from the ICAO code. If a source fails, the error is shown: missing data is not invented.</span></p>
+<section class="panel">
+<form id="airportForm">
+<div class="formgrid">
+<div class="field">
+<label for="icao"><span class="vjg-es">Código OACI</span><span class="vjg-en">Airport ICAO Code</span></label>
+<input id="icao" maxlength="4" pattern="[A-Za-z]{4}" placeholder="MMLO" required autocomplete="off">
+</div>
+<button class="btn" type="submit"><span class="vjg-es">Consultar aeropuerto</span><span class="vjg-en">Check Airport</span></button>
+</div>
+</form>
+<div id="status" class="muted" aria-live="polite" style="margin-top:12px"></div>
+</section>
+<div class="cards">
+<section class="card"><h3><span class="vjg-es">Identificación</span><span class="vjg-en">Identification</span></h3><div id="airportData" class="muted"></div></section>
+<section class="card"><h3><span class="vjg-es">Tiempo actual · METAR</span><span class="vjg-en">Current Weather · METAR</span></h3><div id="weatherData" class="muted"></div></section>
+<section class="card"><h3><span class="vjg-es">Pistas</span><span class="vjg-en">Runways</span></h3><div id="runwayData" class="muted"></div></section>
+<section class="card"><h3><span class="vjg-es">Uso de la información</span><span class="vjg-en">Use of Information</span></h3>
+<p class="muted"><span class="vjg-es">La información sirve para planificación y simulación. No sustituye el METAR/TAF oficial, los NOTAM, las cartas ni la documentación operativa vigente.</span><span class="vjg-en">Information is for planning and simulation only. It does not replace official METAR/TAF, NOTAMs, aeronautical charts, or current operational documentation.</span></p>
+<p class="muted"><span class="vjg-es">La disponibilidad y la actualización dependen de las fuentes consultadas.</span><span class="vjg-en">Data availability and updates depend on the sources consulted.</span></p>
+</section>
+</div>
+<p><a href="generador-vuelos.html"><span class="vjg-es">← Volver al generador de números de vuelo</span><span class="vjg-en">← Back to the Flight Number Generator</span></a></p>
+</main>
+<footer>© VistaJet Group Virtual · VJG</footer>
+<script src="vjg-lang.js"></script>
+<script src="vjg-airports.js"></script>
+<script>
+(() => {
+  const t = (es, en) => (window.VJGLang ? window.VJGLang.t(es, en) : (document.documentElement.lang === "en" ? en : es));
+  const $ = (id) => document.getElementById(id);
+  const state = { phase: "idle", code: "", airport: null, airportError: "", metar: undefined, metarError: "", runways: undefined, runwayError: "" };
 
-</body></html>
+  function line(label, value) {
+    return '<div class="data-line"><strong>' + label + "</strong> " + value + "</div>";
+  }
+  function idle(el, es, en) {
+    el.className = "muted";
+    el.textContent = t(es, en);
+  }
+  function paint() {
+    const status = $("status");
+    status.className = "muted";
+    if (state.phase === "idle") {
+      status.textContent = t("Introduce un código OACI de cuatro letras.", "Enter a four-letter ICAO code.");
+      idle($("airportData"), "Sin consulta.", "Not queried.");
+      idle($("weatherData"), "Sin consulta.", "Not queried.");
+      idle($("runwayData"), "Sin consulta.", "Not queried.");
+      return;
+    }
+    if (state.phase === "invalid") {
+      status.className = "error";
+      status.textContent = t("El código OACI debe tener cuatro letras.", "The ICAO code must be four letters.");
+      idle($("airportData"), "Código no válido.", "Invalid code.");
+      idle($("weatherData"), "Sin consulta.", "Not queried.");
+      idle($("runwayData"), "Sin consulta.", "Not queried.");
+      return;
+    }
+    if (state.phase === "loading") {
+      status.textContent = t("Consultando " + state.code + "…", "Looking up " + state.code + "…");
+      idle($("airportData"), "Cargando directorio…", "Loading directory…");
+      idle($("weatherData"), "Cargando METAR…", "Loading METAR…");
+      idle($("runwayData"), "Cargando pistas…", "Loading runways…");
+      return;
+    }
+    if (state.airport) {
+      const a = state.airport;
+      const place = [a.municipality, a.country].filter(Boolean).join(", ");
+      const elev = Number.isFinite(a.elevationFt) ? Math.round(a.elevationFt) + " ft" : t("no figura en el directorio", "not listed in the directory");
+      $("airportData").className = "";
+      $("airportData").innerHTML = line(t("OACI", "ICAO"), a.icao) + line(t("Nombre", "Name"), a.name) + line(t("Ciudad / país", "City / country"), place || t("no disponible", "not available")) + line(t("Elevación del directorio", "Directory elevation"), elev);
+      status.textContent = t("Directorio encontrado para " + a.icao + ".", "Directory match for " + a.icao + ".");
+    } else {
+      $("airportData").className = "error";
+      $("airportData").textContent = state.airportError === "offline"
+        ? t("No se pudo consultar el directorio. Revisa la conexión.", "The airport directory could not be reached. Check the connection.")
+        : t("No hay un aeropuerto con el código " + state.code + " en las fuentes consultadas.", "No airport with code " + state.code + " was found in the sources consulted.");
+      status.className = "error";
+      status.textContent = $("airportData").textContent;
+    }
+    if (state.metarError) {
+      $("weatherData").className = "error";
+      $("weatherData").textContent = t("No se pudo obtener el METAR.", "METAR could not be retrieved.");
+    } else if (state.metar === null) {
+      $("weatherData").className = "muted";
+      $("weatherData").textContent = t("No hay METAR reciente para este aeropuerto.", "No recent METAR for this airport.");
+    } else if (state.metar) {
+      const m = state.metar;
+      const bits = [m.rawOb || ""];
+      $("weatherData").className = "";
+      $("weatherData").innerHTML = line("METAR", bits.filter(Boolean).join(" ") || t("sin texto", "no text"))
+        + (m.temp != null ? line(t("Temperatura", "Temperature"), m.temp + " °C") : "")
+        + (m.wspd != null ? line(t("Viento", "Wind"), m.wspd + " kt" + (m.wdir != null ? " / " + m.wdir + "°" : "")) : "")
+        + (m.visib != null ? line(t("Visibilidad", "Visibility"), m.visib + " SM") : "")
+        + line(t("Hora del reporte", "Report time"), m.reportTime || m.obsTime || t("no disponible", "unavailable"));
+    } else {
+      idle($("weatherData"), "Cargando METAR…", "Loading METAR…");
+    }
+    if (state.runwayError) {
+      $("runwayData").className = "error";
+      $("runwayData").textContent = t("No se pudo obtener el directorio de pistas.", "The runway directory could not be retrieved.");
+    } else if (state.runways && state.runways.length) {
+      $("runwayData").className = "";
+      $("runwayData").innerHTML = state.runways.slice(0, 8).map(function (r) {
+        const ends = [r.le, r.he].filter(Boolean).join("/");
+        const length = Number.isFinite(r.lengthFt) && r.lengthFt > 0 ? Math.round(r.lengthFt) + " ft · " + Math.round(r.lengthFt * 0.3048) + " m" : t("longitud no disponible", "length unavailable");
+        return line(ends || "—", length + (r.surface ? " · " + r.surface : ""));
+      }).join("");
+    } else if (state.runways) {
+      $("runwayData").className = "muted";
+      $("runwayData").textContent = t("La fuente no tiene pistas para este código.", "The source has no runways for this code.");
+    } else {
+      idle($("runwayData"), "Cargando pistas…", "Loading runways…");
+    }
+  }
+
+  async function query(code) {
+    state.phase = "loading";
+    state.code = code;
+    state.airport = null;
+    state.airportError = "";
+    state.metar = undefined;
+    state.metarError = "";
+    state.runways = undefined;
+    state.runwayError = "";
+    paint();
+    try {
+      state.airport = await window.VJGAirports.lookup(code);
+    } catch (err) {
+      state.airport = null;
+      state.airportError = String(err && err.message || "") === "not-found" ? "missing" : "offline";
+    }
+    state.phase = "done";
+    paint();
+    try {
+      state.metar = await window.VJGAirports.metar(code);
+    } catch (e) {
+      state.metar = undefined;
+      state.metarError = "fail";
+    }
+    paint();
+    try {
+      state.runways = await window.VJGAirports.runways(code);
+    } catch (e) {
+      state.runways = undefined;
+      state.runwayError = "fail";
+    }
+    paint();
+  }
+
+  $("airportForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    const code = $("icao").value.trim().toUpperCase();
+    $("icao").value = code;
+    if (!/^[A-Z]{4}$/.test(code)) {
+      state.phase = "invalid";
+      state.code = code;
+      paint();
+      return;
+    }
+    query(code);
+  });
+  document.addEventListener("vjg-lang", paint);
+  paint();
+})();
+</script>
+</body>
+</html>

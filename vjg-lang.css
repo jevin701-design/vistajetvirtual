@@ -1,0 +1,15 @@
+.vjg-lang-btn{
+  appearance:none;
+  background:transparent;
+  color:inherit;
+  border:1px solid #8b939e;
+  border-radius:4px;
+  padding:8px 11px;
+  font:700 12px/1.2 Inter,Segoe UI,Arial,sans-serif;
+  letter-spacing:.04em;
+  cursor:pointer;
+  white-space:nowrap;
+}
+.vjg-lang-btn:hover{border-color:#e31837}
+.vjg-lang-btn:focus-visible{outline:2px solid #e31837;outline-offset:2px}
+.vjg-head-tools{display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap}

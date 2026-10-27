@@ -1,86 +1,177 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<title>Flight Generator | VistaJet Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<script>try{var l=localStorage.getItem('vjg-lang');if(l==='en'||l==='es')document.documentElement.lang=l;}catch(e){}</script>
+<style>html[lang="es"] .vjg-en{display:none!important}html[lang="en"] .vjg-es{display:none!important}</style>
+<link rel="stylesheet" href="vjg-lang.css">
+<title data-es="Generador de vuelos | VistaJet Group" data-en="Flight Generator | VistaJet Group">Generador de vuelos | VistaJet Group</title>
 <style>
 :root{--r:#e31837;--bg:#17191d;--p:#22252b;--s:#c7cbd1;--m:#9ba2ad}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f7f7f7;font:16px/1.6 Inter,Segoe UI,Arial,sans-serif;border-left:5px solid var(--r)}
 a{color:inherit;text-decoration:none}.wrap{max-width:1000px;margin:auto;padding:28px}
 header{border-bottom:1px solid #393d45;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.brand{font-weight:900;letter-spacing:2px}.brand span,.range{color:var(--r)}nav{display:flex;gap:18px;flex-wrap:wrap;color:var(--s);font-size:14px}
-.eyebrow{color:var(--r);letter-spacing:2px;font-weight:800;font-size:12px}h1{font-size:clamp(38px,6vw,60px);line-height:1.05;margin:16px 0}
+.brand{font-weight:900;letter-spacing:2px}.brand span,.range{color:var(--r)}
+nav{display:flex;gap:18px;flex-wrap:wrap;color:var(--s);font-size:14px}
+.eyebrow{color:var(--r);letter-spacing:2px;font-weight:800;font-size:12px}
+h1{font-size:clamp(38px,6vw,60px);line-height:1.05;margin:16px 0}
 .panel{background:var(--p);border:1px solid #3b3f47;border-top:3px solid var(--r);padding:24px;margin:22px 0}
-p,li,label{color:var(--s)}.range{font:800 24px ui-monospace,monospace}.btn{display:inline-block;padding:12px 16px;background:var(--r);font-weight:800;margin-top:8px;border:0;color:#fff;cursor:pointer}
-.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field{display:flex;flex-direction:column;gap:6px}.field input,.field select{width:100%;background:#17191d;color:#f7f7f7;border:1px solid #525761;border-radius:3px;padding:12px;font:inherit}
-.result{border:1px solid #454a54;padding:18px;margin-top:18px;background:#191b20}.result strong{color:var(--r);font-size:28px;letter-spacing:1px}.muted{color:var(--m);font-size:13px}.airport-summary{margin-top:8px;padding:10px;background:#191b20;border-left:2px solid #555b65;font-size:13px;line-height:1.5}.airport-summary b{color:#fff}.airport-summary .airport-line{display:block;color:var(--s)}.airport-summary .loading{color:var(--m)}
+p,li,label{color:var(--s)}
+.range{font:800 24px ui-monospace,monospace}
+.btn{display:inline-block;padding:12px 16px;background:var(--r);font-weight:800;margin-top:8px;border:0;color:#fff;cursor:pointer}
+.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field input,.field select{width:100%;background:#17191d;color:#f7f7f7;border:1px solid #525761;border-radius:3px;padding:12px;font:inherit}
+.field input[id="origin"],.field input[id="destination"]{text-transform:uppercase}
+.result{border:1px solid #454a54;padding:18px;margin-top:18px;background:#191b20}
+.result strong{color:var(--r);font-size:28px;letter-spacing:1px}
+.muted{color:var(--m);font-size:13px}
+.airport-summary{margin-top:8px;padding:10px;background:#191b20;border-left:2px solid #555b65;font-size:13px;line-height:1.5}
+.airport-summary b{color:#fff}
+.airport-line{display:block;color:var(--s)}
 footer{border-top:3px solid var(--r);padding:25px 28px;color:var(--m);margin-top:50px}
-.range-alert{margin:12px 0;padding:12px 14px;border:1px solid;font-weight:800;letter-spacing:.4px}.range-alert.exceeded{color:#ff4d5d;background:#35171c;border-color:#e31837}.range-alert.within{color:#57e389;background:#153022;border-color:#25a95a}
-
+.range-alert{margin:12px 0;padding:12px 14px;border:1px solid;font-weight:800;letter-spacing:.4px}
+.range-alert.exceeded{color:#ff4d5d;background:#35171c;border-color:#e31837}
+.range-alert.within{color:#57e389;background:#153022;border-color:#25a95a}
 @media(max-width:700px){.wrap{padding:20px}header{padding:16px 20px}.formgrid{grid-template-columns:1fr}}
-</style></head><body>
-<header><a class="brand" href="index.html">VISTA<span>JET</span> GROUP</a><nav><a href="index.html">Home</a><a href="fleet.html">Fleet</a><a href="hubs.html">Hubs</a><a href="condiciones-aeropuerto.html">Airport Conditions</a><a href="calculadora-pista.html">Calculadora de pista</a></nav></header>
+</style>
+</head>
+<body>
+<header>
+<a class="brand" href="index.html">VISTA<span>JET</span> GROUP</a>
+<div class="vjg-head-tools">
+<nav>
+<a href="index.html"><span class="vjg-es">Inicio</span><span class="vjg-en">Home</span></a>
+<a href="fleet.html"><span class="vjg-es">Flota</span><span class="vjg-en">Fleet</span></a>
+<a href="hubs.html">Hubs</a>
+<a href="condiciones-aeropuerto.html"><span class="vjg-es">Condiciones</span><span class="vjg-en">Airport Conditions</span></a>
+<a href="calculadora-pista.html"><span class="vjg-es">Calculadora de pista</span><span class="vjg-en">Runway Calculator</span></a>
+</nav>
+<button class="vjg-lang-btn" id="vjgLangBtn" type="button"><span class="vjg-es">English</span><span class="vjg-en">Español</span></button>
+</div>
+</header>
 <main class="wrap">
-<div class="eyebrow">VJG · FLIGHT OPERATIONS</div><h1>Flight Number Generator</h1>
-<p>Generate a VJT assignment based on division, departure-airport region, and ICAO codes. Always check the number against the active VJG flight log.</p>
+<div class="eyebrow">VJG · <span class="vjg-es">OPERACIONES</span><span class="vjg-en">FLIGHT OPERATIONS</span></div>
+<h1><span class="vjg-es">Generador de números de vuelo</span><span class="vjg-en">Flight Number Generator</span></h1>
+<p><span class="vjg-es">Propone un VJT según la división, la región del aeropuerto de salida y los códigos OACI. El número no lleva letras. OUT y RET se registran aparte.</span><span class="vjg-en">Proposes a VJT number from the division, the departure-airport region, and the ICAO codes. The number has no letters. OUT and RET are recorded separately.</span></p>
 <section class="panel">
-<h2>Flight Generator</h2>
+<h2><span class="vjg-es">Generador de vuelos</span><span class="vjg-en">Flight Generator</span></h2>
 <form id="flightForm">
 <div class="formgrid">
-<div class="field"><label for="division">Division</label><select id="division"><option value="private">Private Aviation (100–499)</option><option value="cargo">Cargo Operations (500–899)</option><option value="charter">Charter Operations (900–999)</option></select></div>
-<div class="field"><label for="region">Departure Region (Private/Cargo)</label><select id="region"><option value="na">North America</option><option value="sa">South America</option><option value="eu">Europe</option><option value="as">Asia</option><option value="oc">Oceania</option><option value="af">Africa</option><option value="me">Middle East</option></select></div>
-<div class="field"><label for="origin">Departure Airport (ICAO)</label><input id="origin" maxlength="4" placeholder="MMLO" required pattern="[A-Za-z]{4}" autocomplete="off"><div id="originInfo" class="muted" aria-live="polite">Enter the ICAO code to identify the airport.</div><div id="originConditions" class="airport-summary" aria-live="polite">Weather and runways will appear here once the airport is identified.</div></div>
-<div class="field"><label for="destination">Arrival Airport (ICAO)</label><input id="destination" maxlength="4" placeholder="KJFK" required pattern="[A-Za-z]{4}" autocomplete="off"><div id="destinationInfo" class="muted" aria-live="polite">Enter the ICAO code to identify the airport.</div><div id="destinationConditions" class="airport-summary" aria-live="polite">Weather and runways will appear here once the airport is identified.</div></div>
-<div class="field"><label for="aircraft">Aircraft for Range Validation</label><select id="aircraft"><option value="777f">Boeing 777F · IF-FVZV</option><option value="challenger">Bombardier Challenger 350 · IF-DUOA</option><option value="a380">Airbus A380-800 · IF-JNPB</option></select><div class="muted">Range validation is only calculated for models with a reference figure available.</div></div><div class="field"><label for="direction">Direction</label><select id="direction"><option value="OUT">OUT · Outbound</option><option value="RET">RET · Return</option></select></div>
-<div class="field"><label for="purpose">Flight Purpose</label><select id="purpose"><option>Executive Transport</option><option>Cargo Transport</option><option>Charter Flight</option><option>Repositioning</option><option>Training Flight</option></select></div>
-</div><button class="btn" type="submit">Generate VJT Number</button>
-</form>
-<div class="result" id="result" aria-live="polite"><span class="muted">Complete the fields to generate the flight number.</span></div>
-<p class="muted">The suggested number is a local proposal; make sure it is not assigned to another active flight before recording it.</p>
-</section>
-
-<section class="panel" id="aircraftCalculator">
-<h2>Boeing 777F — Real Aircraft Limits</h2>
-<p class="muted">Calculadora con referencias técnicas reales del 777F. El peso operativo vacío depende de la configuración de cada operador; el valor inicial es una estimación de referencia y se puede editar. El alcance publicado no garantiza que cualquier combinación de carga y combustible pueda cubrirlo.</p>
-<div class="formgrid">
-<div class="field"><label for="calcAircraft">Aircraft</label><select id="calcAircraft"><option value="777f">Boeing 777F · IF-FVZV (real specs)</option></select></div>
-<div class="field"><label for="calcDistance">Route distance (NM)</label><input id="calcDistance" type="number" min="0" step="1" value="7952" required></div>
-<div class="field"><label for="calcEmpty">Operating empty weight reference (kg)</label><input id="calcEmpty" type="number" min="0" step="1" value="141115" required></div>
-<div class="field"><label for="calcMtow">Maximum takeoff weight — MTOW (kg)</label><input id="calcMtow" type="number" min="1" step="1" value="347810" required></div>
-<div class="field"><label for="calcMlw">Maximum landing weight — MLW (kg)</label><input id="calcMlw" type="number" min="1" step="1" value="260820" required></div>
-<div class="field"><label for="calcMZfw">Maximum zero-fuel weight — MZFW (kg)</label><input id="calcMZfw" type="number" min="1" step="1" value="248115" required></div>
-<div class="field"><label for="calcFuelCap">Maximum usable fuel capacity (kg)</label><input id="calcFuelCap" type="number" min="1" step="1" value="145540" required></div>
-<div class="field"><label for="calcFuel">Fuel loaded (kg)</label><input id="calcFuel" type="number" min="0" step="1" max="145540" value="132768" required></div>
-<div class="field"><label for="calcFuelLanding">Estimated fuel remaining at landing (kg)</label><input id="calcFuelLanding" type="number" min="0" step="1" value="20000" required></div>
-<div class="field"><label for="calcMain">Main cargo (kg)</label><input id="calcMain" type="number" min="0" step="1" value="50608" required></div>
-<div class="field"><label for="calcFront">Front cargo (kg)</label><input id="calcFront" type="number" min="0" step="1" value="4936" required></div>
-<div class="field"><label for="calcBack">Back cargo (kg)</label><input id="calcBack" type="number" min="0" step="1" value="4936" required></div>
-<div class="field"><label for="calcRange">Published reference range (NM)</label><input id="calcRange" type="number" min="1" step="1" value="5000" required></div>
+<div class="field">
+<label for="division"><span class="vjg-es">División</span><span class="vjg-en">Division</span></label>
+<select id="division">
+<option value="private" data-es="Aviación privada (VJT 100–499)" data-en="Private Aviation (VJT 100–499)">Aviación privada (VJT 100–499)</option>
+<option value="cargo" data-es="Operaciones de carga (VJT 500–899)" data-en="Cargo Operations (VJT 500–899)">Operaciones de carga (VJT 500–899)</option>
+<option value="charter" data-es="Operaciones chárter (VJT 900–999)" data-en="Charter Operations (VJT 900–999)">Operaciones chárter (VJT 900–999)</option>
+</select>
 </div>
-<button class="btn" type="button" id="calcRun">Calculate</button>
-<div class="result" id="calcResult" aria-live="polite"><span class="muted">Enter route, fuel and cargo, then calculate.</span></div>
-<p class="muted">Reference basis: Boeing 777F, 5,000 NM published range, 107 t structural payload, MTOW 347,810 kg, MLW 260,820 kg, MZFW 248,115 kg and usable fuel capacity 145,540 kg. The exact OEW depends on the aircraft configuration. Validate performance charts, fuel reserves, alternate airports, weather and landing weight before operational use.</p>
+<div class="field">
+<label for="region"><span class="vjg-es">Región de salida (privada / carga)</span><span class="vjg-en">Departure Region (Private/Cargo)</span></label>
+<select id="region">
+<option value="na" data-es="Norteamérica · 100–150 / 500–550" data-en="North America · 100–150 / 500–550">Norteamérica · 100–150 / 500–550</option>
+<option value="eu" data-es="Europa · 151–200 / 551–600" data-en="Europe · 151–200 / 551–600">Europa · 151–200 / 551–600</option>
+<option value="as" data-es="Asia · 201–250 / 601–650" data-en="Asia · 201–250 / 601–650">Asia · 201–250 / 601–650</option>
+<option value="sa" data-es="Sudamérica · 251–300 / 651–700" data-en="South America · 251–300 / 651–700">Sudamérica · 251–300 / 651–700</option>
+<option value="af" data-es="África · 301–350 / 701–750" data-en="Africa · 301–350 / 701–750">África · 301–350 / 701–750</option>
+<option value="me" data-es="Medio Oriente · 351–400 / 751–800" data-en="Middle East · 351–400 / 751–800">Medio Oriente · 351–400 / 751–800</option>
+<option value="oc" data-es="Oceanía · 401–449 / 801–849" data-en="Oceania · 401–449 / 801–849">Oceanía · 401–449 / 801–849</option>
+<option value="reserve" data-es="Expansión · 450–499 / 850–899" data-en="Expansion · 450–499 / 850–899">Expansión · 450–499 / 850–899</option>
+</select>
+<p class="muted" id="regionNote"></p>
+</div>
+<div class="field">
+<label for="origin"><span class="vjg-es">Aeropuerto de salida (OACI)</span><span class="vjg-en">Departure Airport (ICAO)</span></label>
+<input id="origin" maxlength="4" placeholder="MMLO" required pattern="[A-Za-z]{4}" autocomplete="off">
+<div id="originInfo" class="muted" aria-live="polite"></div>
+<div id="originConditions" class="airport-summary" aria-live="polite"></div>
+</div>
+<div class="field">
+<label for="destination"><span class="vjg-es">Aeropuerto de llegada (OACI)</span><span class="vjg-en">Arrival Airport (ICAO)</span></label>
+<input id="destination" maxlength="4" placeholder="KJFK" required pattern="[A-Za-z]{4}" autocomplete="off">
+<div id="destinationInfo" class="muted" aria-live="polite"></div>
+<div id="destinationConditions" class="airport-summary" aria-live="polite"></div>
+</div>
+<div class="field">
+<label for="aircraft"><span class="vjg-es">Aeronave para validar alcance</span><span class="vjg-en">Aircraft for Range Validation</span></label>
+<select id="aircraft">
+<option value="777f">Boeing 777F · IF-FVZV</option>
+<option value="challenger">Bombardier Challenger 350 · IF-DUOA</option>
+<option value="a380">Airbus A380-800 · IF-JNPB</option>
+</select>
+<div class="muted"><span class="vjg-es">Al cambiar la aeronave se propone su división. Puedes elegir otra después. El alcance solo se calcula si hay una cifra de referencia.</span><span class="vjg-en">Changing the aircraft suggests its division. You can choose another afterwards. Range is calculated only when a reference figure exists.</span></div>
+</div>
+<div class="field">
+<label for="direction"><span class="vjg-es">Sentido</span><span class="vjg-en">Direction</span></label>
+<select id="direction">
+<option value="OUT" data-es="OUT · Ida" data-en="OUT · Outbound">OUT · Ida</option>
+<option value="RET" data-es="RET · Regreso" data-en="RET · Return">RET · Regreso</option>
+</select>
+</div>
+<div class="field">
+<label for="purpose"><span class="vjg-es">Propósito del vuelo</span><span class="vjg-en">Flight Purpose</span></label>
+<select id="purpose">
+<option value="executive" data-es="Transporte ejecutivo" data-en="Executive Transport">Transporte ejecutivo</option>
+<option value="cargo" data-es="Transporte de carga" data-en="Cargo Transport">Transporte de carga</option>
+<option value="charter" data-es="Vuelo chárter" data-en="Charter Flight">Vuelo chárter</option>
+<option value="reposition" data-es="Reposicionamiento" data-en="Repositioning">Reposicionamiento</option>
+<option value="training" data-es="Vuelo de entrenamiento" data-en="Training Flight">Vuelo de entrenamiento</option>
+</select>
+</div>
+</div>
+<button class="btn" type="submit" id="generateBtn"></button>
+</form>
+<div class="result" id="result" aria-live="polite"></div>
+<p class="muted"><span class="vjg-es">La propuesta se guarda solo en este navegador para no repetir un VJT ya usado aquí. No es el libro de vuelos oficial de la compañía: confirma el número antes de registrarlo.</span><span class="vjg-en">The proposal is stored only in this browser so a VJT already used here is not repeated. It is not the company’s official flight log: confirm the number before recording it.</span></p>
 </section>
-<section class="panel"><h2>Numbering Ranges</h2><div class="range">VJT 100–499</div><p><strong>Private Aviation:</strong> private and executive flights. The region is determined by the departure airport.</p><div class="range">VJT 500–899</div><p><strong>Cargo Operations:</strong> cargo transportation. The region is determined by the departure airport.</p><div class="range">VJT 900–999</div><p><strong>Charter Operations:</strong> global range assigned consecutively, without regional subdivisions.</p></section>
-<section class="panel"><h2>Identification Rules</h2><ul><li>Operational prefix: VJT.</li><li>OUT and RET are recorded separately; they are not added to the number.</li><li>The number must be unique across active routes.</li><li>Private Aviation and Cargo use the departure airport’s region.</li><li>Use ICAO codes and validate aircraft and airport capabilities.</li></ul></section>
-<p><a href="index.html">← Back to Home</a></p>
-</main><footer>© VistaJet Group Virtual · VJG</footer>
-<script>
-(()=>{const $=id=>document.getElementById(id);const ranges={private:[100,499],cargo:[500,899],charter:[900,999]};const regionRanges={private:{na:[100,150],eu:[151,200],as:[201,250],sa:[251,300],af:[301,350],me:[351,400],oc:[401,449],reserve:[450,499]},cargo:{na:[500,550],eu:[551,600],as:[601,650],sa:[651,700],af:[701,750],me:[751,800],oc:[801,849],reserve:[850,899]}};const regionByContinent={NA:'na',SA:'sa',EU:'eu',AS:'as',OC:'oc',AF:'af'};const airportCache={};const runwayCache={};const airportText=(es,en)=>document.documentElement.lang==='en'?en:es;async function loadAirportConditions(code,field,a){const box=$(field+'Conditions');box.innerHTML='<span class="loading">'+airportText('Loading weather and runways…','Loading weather and runways…')+'</span>';const parts=[];try{const r=await fetch('https://aviationweather.gov/api/data/metar?ids='+encodeURIComponent(code)+'&format=json&hours=2');if(r.ok){const arr=await r.json();if(arr&&arr.length){const m=arr[0];parts.push('<span class="airport-line"><b>'+airportText('Weather / METAR:','Weather / METAR:')+'</b> '+[m.rawOb,m.temp!=null?airportText('Temp. ','Temp. ')+m.temp+' °C':'',m.wspd!=null?airportText('Viento ','Wind ')+m.wspd+' kt'+(m.wdir!=null?' '+airportText('desde ','from ')+m.wdir+'°':''):'',m.visib!=null?airportText('Visibilidad ','Visibility ')+m.visib+' SM':'',m.altim!=null?airportText('Presión ','Pressure ')+(Number(m.altim)>100?Number(m.altim).toFixed(0):(Number(m.altim)*33.8639).toFixed(0))+' hPa':''].filter(Boolean).join(' · ')+'</span>');parts.push('<span class="airport-line muted">'+airportText('Report: ','Report: ')+(m.reportTime||m.obsTime||airportText('time unavailable','time unavailable'))+'</span>')}else parts.push('<span class="airport-line">'+airportText('METAR unavailable for this airport.','METAR unavailable for this airport.')+'</span>')}else parts.push('<span class="airport-line">'+airportText('Could not retrieve METAR.','Could not retrieve METAR.')+'</span>')}catch(e){parts.push('<span class="airport-line">'+airportText('Weather unavailable right now.','Weather unavailable right now.')+'</span>')}try{if(!runwayCache[code]){const rr=await fetch('https://raw.githubusercontent.com/davidmegginson/ourairports-data/main/runways.csv');if(rr.ok){const csv=await rr.text();runwayCache[code]=csv.split(/\\r?\\n/).slice(1).map(line=>{const cols=line.match(/("(?:[^"]|"")*"|[^,]*)(,|$)/g);if(!cols)return null;return cols.map(x=>x.replace(/,$/,'').replace(/^"|"$/g,'').replace(/""/g,'"'))}).filter(Boolean)}}const rows=runwayCache[code]||[];let found=rows.filter(row=>row[2]===code);if(found.length){for(const row of found.slice(0,4)){const length=row[3]?Math.round(Number(row[3])*0.3048)+' m ('+row[3]+' ft)':'longitud no disponible';const ends=[row[8],row[14]].filter(Boolean).join('/');parts.push('<span class="airport-line"><b>Runway '+(ends||'—')+':</b> '+length+(row[5]?' · '+row[5]:'')+'</span>')}}else parts.push('<span class="airport-line">'+airportText('Runway data unavailable from the selected source.','Runway data unavailable from the selected source.')+'</span>')}catch(e){parts.push('<span class="airport-line">'+airportText('Runways: temporarily unavailable.','Runway data temporarily unavailable.')+'</span>')}box.innerHTML=parts.join('')+'<span class="airport-line muted">'+airportText('Informational data; verify official METAR/NOTAM and sources before operations.','Informational data; verify official METAR/NOTAM and sources before operations.')+'</span>'}let airportDirectoryPromise=null;function parseCsvRow(line){const out=[];let value='',quoted=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){if(quoted&&line[i+1]==='"'){value+='"';i++}else quoted=!quoted}else if(ch===','&&!quoted){out.push(value);value=''}else value+=ch}out.push(value);return out}async function lookupAirportDirectory(code){if(!airportDirectoryPromise){airportDirectoryPromise=fetch('https://raw.githubusercontent.com/davidmegginson/ourairports-data/main/airports.csv').then(r=>{if(!r.ok)throw new Error('airport-directory-unavailable');return r.text()})}const csv=await airportDirectoryPromise;const lines=csv.split(/\r?\n/);const headers=parseCsvRow(lines.shift()||'');const indexes={};headers.forEach((h,i)=>indexes[h]=i);let row=null;for(const line of lines){if(!line)continue;const cols=parseCsvRow(line);const val=k=>(cols[indexes[k]]||'').toUpperCase();if((val('icao_code')===code||val('gps_code')===code||val('ident')===code)&&val('type')!=='CLOSED'){row={name:cols[indexes.name]||code,municipality:cols[indexes.municipality]||'',country_name:cols[indexes.iso_country]||'',continent_code:cols[indexes.continent]||'',latitude:Number(cols[indexes.latitude_deg]),longitude:Number(cols[indexes.longitude_deg])};break}}if(!row)throw new Error('airport-not-found');return {icao:code,code:code,name:row.name,municipality:row.municipality,country_name:row.country_name,continent_code:row.continent_code,latitude:row.latitude,longitude:row.longitude,latitude_deg:row.latitude,longitude_deg:row.longitude}}async function lookupAirport(field){const code=$(field).value.trim().toUpperCase();const info=$(field+'Info');$(field).value=code;if(!code){info.textContent='Enter the ICAO code to identify the airport.';return null}if(!/^[A-Z]{4}$/.test(code)){info.textContent='Enter a valid four-letter ICAO code.';return null}info.textContent='Looking up airport…';let a=airportCache[code];if(!a){try{const res=await fetch('https://api.freeairportdb.com/v1/airports/'+encodeURIComponent(code),{headers:{Accept:'application/json'}});if(!res.ok)throw new Error('primary-lookup-failed');const json=await res.json();const candidate=json.data;if(!candidate||!((candidate.icao||candidate.icao_code||candidate.code||'').toUpperCase()===code))throw new Error('primary-lookup-invalid');a=candidate}catch(primaryError){try{a=await lookupAirportDirectory(code)}catch(directoryError){info.textContent='Airport lookup failed. Check the ICAO code or try again when the airport directory is available.';return null}}airportCache[code]=a}const label=[a.name,a.municipality,a.country_name].filter(Boolean).join(' · ');info.textContent='✓ '+label;loadAirportConditions(code,field,a);if(field==='origin'){const country=String(a.country_name||'').toLowerCase();const middleEast=/united arab emirates|saudi arabia|qatar|bahrain|kuwait|oman|yemen|iraq|iran|israel|jordan|lebanon|syria|palestine|turkey|türkiye|cyprus/.test(country)||/^(AE|SA|QA|BH|KW|OM|YE|IQ|IR|IL|JO|LB|SY|PS|TR|CY)$/.test(String(a.country_name||'').toUpperCase());if(middleEast)$('region').value='me';else if(regionByContinent[a.continent_code])$('region').value=regionByContinent[a.continent_code]}return a}$('origin').addEventListener('change',()=>lookupAirport('origin'));$('origin').addEventListener('blur',()=>{if($('origin').value.trim())lookupAirport('origin')});$('destination').addEventListener('change',()=>lookupAirport('destination'));$('destination').addEventListener('blur',()=>{if($('destination').value.trim())lookupAirport('destination')});$('flightForm').addEventListener('submit',async e=>{e.preventDefault();const d=$('division').value;const [lo,hi]=ranges[d];const from=$('origin').value.trim().toUpperCase();const to=$('destination').value.trim().toUpperCase();if(!/^[A-Z]{4}$/.test(from)||!/^[A-Z]{4}$/.test(to))return;const airports=await Promise.all([lookupAirport('origin'),lookupAirport('destination')]);if(airports.some(a=>!a))return;const reg=$('region').value;let num;if(d==='charter'){const key='vjg-counter-charter';const last=Number(localStorage.getItem(key));num=(!Number.isFinite(last)||last<900||last>=999)?900:last+1;localStorage.setItem(key,String(num))}else{const range=(regionRanges[d]||{})[reg]||ranges[d];const [start,end]=range;const key='vjg-counter-'+d+'-'+reg;const last=Number(localStorage.getItem(key));num=(!Number.isFinite(last)||last<start||last>=end)?start:last+1;localStorage.setItem(key,String(num))}const purpose=$('purpose').value;const direction=$('direction').value;const origin=airports[0],destination=airports[1];const aircraft=$('aircraft').value;const coord=a=>({lat:Number(a.latitude??a.lat??a.latitude_deg),lon:Number(a.longitude??a.lon??a.longitude_deg)});const o=coord(origin),t=coord(destination);let rangeNote='';if(Number.isFinite(o.lat)&&Number.isFinite(o.lon)&&Number.isFinite(t.lat)&&Number.isFinite(t.lon)){const rad=x=>x*Math.PI/180;const dl=rad(t.lat-o.lat),dn=rad(t.lon-o.lon);const q=Math.sin(dl/2)**2+Math.cos(rad(o.lat))*Math.cos(rad(t.lat))*Math.sin(dn/2)**2;const nm=3440.065*2*Math.atan2(Math.sqrt(q),Math.sqrt(Math.max(0,1-q)));const aircraftRanges={ '777f':4968, challenger:3200, a380:7991 };const referenceRange=aircraftRanges[aircraft];const exceeds=nm>referenceRange;const alertClass=exceeds?'exceeded':'within';const alertText=exceeds?'EXCEDE LÍMITE':'DENTRO DEL ALCANCE';const modelName=aircraft==='777f'?'Boeing 777F':aircraft==='challenger'?'Bombardier Challenger 350':'Airbus A380-800';rangeNote='<p><b>Estimated great-circle distance:</b> '+Math.round(nm).toLocaleString()+' NM · <b>'+modelName+' reference range:</b> '+referenceRange.toLocaleString()+' NM.</p><div class="range-alert '+alertClass+'" role="status">'+alertText+'</div><p class="muted">'+(exceeds?'La distancia directa supera el alcance de referencia de la aeronave seleccionada.':'La distancia directa está dentro del alcance de referencia de la aeronave seleccionada.')+' La ruta real puede ser más larga y requiere considerar reservas, alternos y condiciones adecuadas.</p>'}else{rangeNote='<p class="muted">Could not read coordinates from the airport directory; distance and range were not validated.</p>'}$('result').innerHTML='<div class="muted">SUGGESTED VJT NUMBER</div><strong>VJT '+num+'</strong><p><b>'+from+' · '+origin.name+' ('+[origin.municipality,origin.country_name].filter(Boolean).join(', ')+') → '+to+' · '+destination.name+' ('+[destination.municipality,destination.country_name].filter(Boolean).join(', ')+')</b></p><p>'+direction+' · '+purpose+'</p>'+rangeNote+'<p class="muted">Region detected automatically from the departure airport. Proposal generated; verify uniqueness in the VJG flight log.</p>';});})();
-</script>
-
-
-<script>
-(()=> {
-const $=id=>document.getElementById(id);
-$('calcRun').addEventListener('click',()=>{
- const distance=Number($('calcDistance').value), empty=Number($('calcEmpty').value), mtow=Number($('calcMtow').value), mlw=Number($('calcMlw').value), mzfw=Number($('calcMZfw').value), fuelCap=Number($('calcFuelCap').value), fuel=Number($('calcFuel').value), fuelLanding=Number($('calcFuelLanding').value), main=Number($('calcMain').value), front=Number($('calcFront').value), back=Number($('calcBack').value), range=Number($('calcRange').value);
- if([distance,empty,mtow,mlw,mzfw,fuelCap,fuel,fuelLanding,main,front,back,range].some(v=>!Number.isFinite(v)||v<0)||mtow<=0||mlw<=0||mzfw<=0||fuelCap<=0||range<=0){$('calcResult').innerHTML='<p class="range-alert exceeded">Check the values entered.</p>';return;}
- const cargo=main+front+back,takeoff=empty+fuel+cargo,landing=empty+fuelLanding+cargo,zfw=empty+cargo,rangeOK=distance<=range,mtowOK=takeoff<=mtow,mlwOK=landing<=mlw,mzfwOK=zfw<=mzfw,fuelCapOK=fuel<=fuelCap,payloadOK=cargo<=107000;
- const alert=(ok,yes,no)=>'<div class="range-alert '+(ok?'within':'exceeded')+'">'+(ok?yes:no)+'</div>';
- $('calcResult').innerHTML='<p><b>Route distance:</b> '+Math.round(distance).toLocaleString()+' NM · <b>Boeing reference range:</b> '+Math.round(range).toLocaleString()+' NM</p>'+alert(rangeOK,'WITHIN PUBLISHED RANGE','EXCEEDS PUBLISHED RANGE BY '+Math.round(distance-range).toLocaleString()+' NM')+'<p><b>Fuel at takeoff:</b> '+Math.round(fuel).toLocaleString()+' / '+Math.round(fuelCap).toLocaleString()+' kg</p>'+alert(fuelCapOK,'FUEL CAPACITY OK','EXCEEDS FUEL CAPACITY BY '+Math.round(fuel-fuelCap).toLocaleString()+' kg')+'<p><b>Total cargo:</b> '+Math.round(cargo).toLocaleString()+' kg</p>'+alert(payloadOK,'CARGO WITHIN 107,000 KG STRUCTURAL PAYLOAD REFERENCE','CARGO EXCEEDS 107,000 KG STRUCTURAL PAYLOAD REFERENCE')+'<p><b>Zero-fuel weight (ZFW):</b> '+Math.round(zfw).toLocaleString()+' kg · <b>MZFW:</b> '+Math.round(mzfw).toLocaleString()+' kg</p>'+alert(mzfwOK,'ZFW WITHIN MZFW','ZFW EXCEEDS MZFW BY '+Math.round(zfw-mzfw).toLocaleString()+' kg')+'<p><b>Calculated takeoff weight:</b> '+Math.round(takeoff).toLocaleString()+' kg · <b>MTOW:</b> '+Math.round(mtow).toLocaleString()+' kg</p>'+alert(mtowOK,'TAKEOFF WEIGHT WITHIN MTOW · MARGIN '+Math.round(mtow-takeoff).toLocaleString()+' kg','OVER MTOW BY '+Math.round(takeoff-mtow).toLocaleString()+' kg')+'<p><b>Estimated landing weight:</b> '+Math.round(landing).toLocaleString()+' kg · <b>MLW:</b> '+Math.round(mlw).toLocaleString()+' kg</p>'+alert(mlwOK,'LANDING WEIGHT WITHIN MLW · MARGIN '+Math.round(mlw-landing).toLocaleString()+' kg','OVER MLW BY '+Math.round(landing-mlw).toLocaleString()+' kg')+'<p class="muted">Range is a published reference, not a guarantee for this payload. Landing weight uses the entered estimated fuel remaining. OEW varies by aircraft/operator configuration; edit the reference weight to match the aircraft documentation. Confirm actual Boeing payload-range charts, reserves, alternates and operational limits.</p>';
-});
-})();
-</script>
-
-</body></html>
+<section class="panel" id="aircraftCalculator">
+<h2>Boeing 777F — <span class="vjg-es">límites reales de la aeronave</span><span class="vjg-en">Real Aircraft Limits</span></h2>
+<p class="muted"><span class="vjg-es">Referencias técnicas ya usadas en esta página para el 777F. El peso operativo vacío depende de la configuración de cada operador; el valor inicial es una estimación editable. El alcance publicado no garantiza que cualquier combinación de carga y combustible pueda cubrirlo.</span><span class="vjg-en">Technical references already used on this page for the 777F. Operating empty weight depends on each operator’s configuration; the initial value is an editable estimate. Published range does not guarantee that every payload and fuel combination can fly it.</span></p>
+<div class="formgrid">
+<div class="field"><label for="calcAircraft"><span class="vjg-es">Aeronave</span><span class="vjg-en">Aircraft</span></label><select id="calcAircraft"><option value="777f">Boeing 777F · IF-FVZV</option></select></div>
+<div class="field"><label for="calcDistance"><span class="vjg-es">Distancia de ruta (NM)</span><span class="vjg-en">Route distance (NM)</span></label><input id="calcDistance" type="number" min="0" step="1" value="7952" required></div>
+<div class="field"><label for="calcEmpty"><span class="vjg-es">Peso operativo vacío de referencia (kg)</span><span class="vjg-en">Operating empty weight reference (kg)</span></label><input id="calcEmpty" type="number" min="0" step="1" value="141115" required></div>
+<div class="field"><label for="calcMtow"><span class="vjg-es">Peso máximo de despegue — MTOW (kg)</span><span class="vjg-en">Maximum takeoff weight — MTOW (kg)</span></label><input id="calcMtow" type="number" min="1" step="1" value="347810" required></div>
+<div class="field"><label for="calcMlw"><span class="vjg-es">Peso máximo de aterrizaje — MLW (kg)</span><span class="vjg-en">Maximum landing weight — MLW (kg)</span></label><input id="calcMlw" type="number" min="1" step="1" value="260820" required></div>
+<div class="field"><label for="calcMZfw"><span class="vjg-es">Peso máximo sin combustible — MZFW (kg)</span><span class="vjg-en">Maximum zero-fuel weight — MZFW (kg)</span></label><input id="calcMZfw" type="number" min="1" step="1" value="248115" required></div>
+<div class="field"><label for="calcFuelCap"><span class="vjg-es">Capacidad máxima de combustible utilizable (kg)</span><span class="vjg-en">Maximum usable fuel capacity (kg)</span></label><input id="calcFuelCap" type="number" min="1" step="1" value="145540" required></div>
+<div class="field"><label for="calcFuel"><span class="vjg-es">Combustible cargado (kg)</span><span class="vjg-en">Fuel loaded (kg)</span></label><input id="calcFuel" type="number" min="0" step="1" max="145540" value="132768" required></div>
+<div class="field"><label for="calcFuelLanding"><span class="vjg-es">Combustible estimado al aterrizar (kg)</span><span class="vjg-en">Estimated fuel remaining at landing (kg)</span></label><input id="calcFuelLanding" type="number" min="0" step="1" value="20000" required></div>
+<div class="field"><label for="calcMain"><span class="vjg-es">Carga principal (kg)</span><span class="vjg-en">Main cargo (kg)</span></label><input id="calcMain" type="number" min="0" step="1" value="50608" required></div>
+<div class="field"><label for="calcFront"><span class="vjg-es">Carga delantera (kg)</span><span class="vjg-en">Front cargo (kg)</span></label><input id="calcFront" type="number" min="0" step="1" value="4936" required></div>
+<div class="field"><label for="calcBack"><span class="vjg-es">Carga trasera (kg)</span><span class="vjg-en">Back cargo (kg)</span></label><input id="calcBack" type="number" min="0" step="1" value="4936" required></div>
+<div class="field"><label for="calcRange"><span class="vjg-es">Alcance de referencia publicado (NM)</span><span class="vjg-en">Published reference range (NM)</span></label><input id="calcRange" type="number" min="1" step="1" value="5000" required></div>
+</div>
+<button class="btn" type="button" id="calcRun"></button>
+<div class="result" id="calcResult" aria-live="polite"></div>
+<p class="muted"><span class="vjg-es">Base de esta sección: Boeing 777F, alcance publicado 5,000 NM, carga estructural de referencia 107 t, MTOW 347,810 kg, MLW 260,820 kg, MZFW 248,115 kg y combustible utilizable 145,540 kg. El OEW exacto depende de la configuración. Confirma cartas, reservas, alternos, meteorología y peso de aterrizaje antes de usar la cifra.</span><span class="vjg-en">Reference basis: Boeing 777F, 5,000 NM published range, 107 t structural payload, MTOW 347,810 kg, MLW 260,820 kg, MZFW 248,115 kg and usable fuel capacity 145,540 kg. The exact OEW depends on the aircraft configuration. Validate performance charts, fuel reserves, alternate airports, weather and landing weight before operational use.</span></p>
+</section>
+<section class="panel">
+<h2><span class="vjg-es">Rangos de numeración</span><span class="vjg-en">Numbering Ranges</span></h2>
+<div class="range">VJT 100–499</div>
+<p><strong><span class="vjg-es">Aviación privada:</span><span class="vjg-en">Private Aviation:</span></strong> <span class="vjg-es">vuelos privados y ejecutivos. La región la marca el aeropuerto de salida.</span><span class="vjg-en">private and executive flights. The region is determined by the departure airport.</span></p>
+<div class="range">VJT 500–899</div>
+<p><strong><span class="vjg-es">Operaciones de carga:</span><span class="vjg-en">Cargo Operations:</span></strong> <span class="vjg-es">transporte de carga. La región la marca el aeropuerto de salida.</span><span class="vjg-en">cargo transportation. The region is determined by the departure airport.</span></p>
+<div class="range">VJT 900–999</div>
+<p><strong><span class="vjg-es">Operaciones chárter:</span><span class="vjg-en">Charter Operations:</span></strong> <span class="vjg-es">rango global, sin subdivisiones regionales.</span><span class="vjg-en">global range, without regional subdivisions.</span></p>
+</section>
+<section class="panel">
+<h2><span class="vjg-es">Reglas de identificación</span><span class="vjg-en">Identification Rules</span></h2>
+<ul>
+<li><span class="vjg-es">Prefijo operativo: VJT.</span><span class="vjg-en">Operational prefix: VJT.</span></li>
+<li><span class="vjg-es">OUT y RET se anotan aparte; no se añaden al número.</span><span class="vjg-en">OUT and RET are recorded separately; they are not added to the number.</span></li>
+<li><span class="vjg-es">El número no debe repetirse en dos rutas activas distintas.</span><span class="vjg-en">The number must be unique across active routes.</span></li>
+<li><span class="vjg-es">Aviación privada y Carga usan la región del aeropuerto de salida.</span><span class="vjg-en">Private Aviation and Cargo use the departure airport’s region.</span></li>
+<li><span class="vjg-es">Usar códigos OACI y comprobar aeronave y aeropuerto.</span><span class="vjg-en">Use ICAO codes and validate aircraft and airport capabilities.</span></li>
+</ul>
+</section>
+<p><a href="index.html"><span class="vjg-es">← Volver al inicio</span><span class="vjg-en">← Back to Home</span></a></p>
+</main>
+<footer>© VistaJet Group Virtual · VJG</footer>
+<script src="vjg-lang.js"></script>
+<script src="vjg-airports.js"></script>
+<script src="vjg-generator.js"></script>
+</body>
+</html>
