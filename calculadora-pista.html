@@ -25,14 +25,15 @@
 <section class="panel">
 <h2>2 · Aeropuerto y pista</h2>
 <div class="grid">
-<div class="field"><label for="icao">Código ICAO</label><input id="icao" maxlength="4" value="FAOR" autocomplete="off" placeholder="KJFK"></div>
-<div class="field"><label for="runway">Designador de pista</label><input id="runway" maxlength="3" value="03L" placeholder="Ej. 13R"></div>
+<div class="field"><label for="icao">Código ICAO</label><input id="icao" maxlength="4" value="MMLO" autocomplete="off" placeholder="KJFK"><small id="airportStatus" class="muted" aria-live="polite">Consultando directorio de aeropuertos…</small></div>
+<div class="field"><label for="airportName">Aeropuerto detectado</label><input id="airportName" readonly value="Buscando aeropuerto…"></div>
+<div class="field"><label for="runway">Pista (designador)</label><input id="runway" list="runwayOptions" maxlength="3" value="" placeholder="Ej. 13R" autocomplete="off"><datalist id="runwayOptions"></datalist></div>
 <div class="field"><label for="elev">Elevación del aeropuerto (ft)</label><input id="elev" type="number" value="5558"></div>
 <div class="field"><label for="length">Longitud disponible (ft)</label><input id="length" type="number" value="14518"></div>
 <div class="field"><label for="width">Ancho de pista (ft)</label><input id="width" type="number" value="200"></div>
 <div class="field"><label for="heading">Rumbo de pista (°)</label><input id="heading" type="number" value="30"></div>
 </div>
-<p class="muted">El código ICAO y la pista se registran aquí; esta versión no descarga automáticamente la base de datos aeroportuaria. Confirma designador, longitud y elevación con una fuente aeronáutica actualizada.</p>
+<p class="muted">El aeropuerto se busca por ICAO y, si el directorio contiene datos de pista, al elegir el designador se rellenan longitud, ancho y rumbo automáticamente. Confirma siempre los datos para tu operación en Infinite Flight.</p>
 </section>
 <section class="panel">
 <h2>3 · Condiciones ambientales</h2>
@@ -53,7 +54,39 @@
 (()=> {
  const $=id=>document.getElementById(id);
  const n=id=>Number($(id).value);
+
  const fmt=v=>Math.round(v).toLocaleString('es-MX');
+ let airportIndex=null, runwayIndex=null, airportLoading=null;
+ function parseCSVLine(line){const out=[];let v='',quoted=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'&&quoted&&line[i+1]==='"'){v+='"';i++;}else if(ch==='"'){quoted=!quoted;}else if(ch===','&&!quoted){out.push(v);v='';}else v+=ch;}out.push(v);return out;}
+ async function loadAirportData(){
+  if(airportIndex&&runwayIndex)return;
+  if(!airportLoading)airportLoading=Promise.all([
+   fetch('https://raw.githubusercontent.com/davidmegginson/ourairports-data/main/airports.csv').then(r=>{if(!r.ok)throw Error('airports');return r.text();}),
+   fetch('https://raw.githubusercontent.com/davidmegginson/ourairports-data/main/runways.csv').then(r=>{if(!r.ok)throw Error('runways');return r.text();})
+  ]).then(([ac,rc])=>{
+   const parse=(csv)=>{const lines=csv.split(/\r?\n/),headers=parseCSVLine(lines.shift()),ix=Object.fromEntries(headers.map((h,i)=>[h,i]));return {lines,ix};};
+   const A=parse(ac),airports={},byId={};
+   for(const line of A.lines){if(!line)continue;const a=parseCSVLine(line),icao=(a[A.ix.icao_code]||'').toUpperCase(),ident=(a[A.ix.ident]||'').toUpperCase(),code=icao||(/^[A-Z]{4}$/.test(ident)?ident:'');if(code.length===4&&a[A.ix.type]!=='closed'){const item={id:a[A.ix.id],code,name:a[A.ix.name]||'Aeropuerto sin nombre',city:a[A.ix.municipality]||'',country:a[A.ix.iso_country]||'',elev:Number(a[A.ix.elevation_ft])};if(!airports[code])airports[code]=item;byId[item.id]=item;}}
+   const R=parse(rc),runways={};
+   for(const line of R.lines){if(!line)continue;const a=parseCSVLine(line),id=a[R.ix.airport_ref],airport=byId[id];if(!airport||a[R.ix.closed]==='1')continue;const item={le:a[R.ix.le_ident]||'',he:a[R.ix.he_ident]||'',length:Number(a[R.ix.length_ft]),width:Number(a[R.ix.width_ft]),heading:Number(a[R.ix.le_heading_degT]),surface:a[R.ix.surface]||''};if(!item.le)continue;(runways[airport.code]||(runways[airport.code]=[])).push(item);}
+   airportIndex=airports;runwayIndex=runways;
+  }).catch(e=>{airportLoading=null;throw e;});
+  return airportLoading;
+ }
+ function applyRunway(){const code=$('icao').value.trim().toUpperCase(),designator=$('runway').value.trim().toUpperCase(),list=runwayIndex&&runwayIndex[code]||[];const r=list.find(x=>x.le.toUpperCase()===designator||x.he.toUpperCase()===designator);if(!r){if(designator)$('airportStatus').textContent='Aeropuerto detectado; pista no encontrada con ese designador. Introduce los datos manualmente.';return;}if(r.length>0)$('length').value=Math.round(r.length);if(r.width>0)$('width').value=Math.round(r.width);if(Number.isFinite(r.heading))$('heading').value=Math.round(r.heading);$('airportStatus').textContent='Aeropuerto y pista encontrados. Datos de pista cargados desde OurAirports; confirma su vigencia.';}
+ async function detectAirport(){
+  const code=$('icao').value.trim().toUpperCase();$('icao').value=code;
+  if(!/^[A-Z]{4}$/.test(code)){$('airportStatus').textContent='Introduce un código ICAO de cuatro letras.';$('airportName').value='';$('runwayOptions').innerHTML='';return;}
+  $('airportStatus').textContent='Consultando directorio mundial de aeropuertos…';$('airportName').value='Buscando…';
+  try{await loadAirportData();const a=airportIndex[code];if(!a){$('airportStatus').textContent='Código ICAO no encontrado. Verifica las cuatro letras.';$('airportName').value='No encontrado';$('runwayOptions').innerHTML='';return;}
+   $('airportName').value=[a.name,a.city,a.country].filter(Boolean).join(' · ');if(Number.isFinite(a.elev))$('elev').value=Math.round(a.elev);
+   const list=runwayIndex[code]||[];$('runwayOptions').innerHTML=list.map(r=>'<option value="'+r.le.replace(/&/g,'&amp;').replace(/"/g,'&quot;')+'">'+r.le+' · '+(r.length?Math.round(r.length).toLocaleString('es-MX')+' ft':'longitud n/d')+'</option>').join('');
+   $('airportStatus').textContent='Aeropuerto ICAO detectado'+(list.length?' · '+list.length+' registros de pista disponibles.':' · sin registros de pista disponibles.');
+   if(list.length===1){$('runway').value=list[0].le;applyRunway();}else if($('runway').value)applyRunway();
+  }catch(e){$('airportStatus').textContent='No se pudo cargar el directorio. Revisa la conexión; puedes introducir los datos manualmente.';$('airportName').value='Sin verificación en línea';}
+ }
+ $('icao').addEventListener('change',detectAirport);$('icao').addEventListener('blur',detectAirport);$('runway').addEventListener('change',applyRunway);$('runway').addEventListener('blur',applyRunway);
+
  const specs={
   '777f':{name:'Boeing 777F · IF-FVZV',oew:139010,mtow:347815,mlw:260810,fuelCapacity:145540,burn:7000,range:4968,vSpeeds:{mtow:347815,b1:154,br:166,b2:176},flaps:['5','15','20'],defaultFuel:60000,defaultCargo:50000,source:'Consumo de crucero provisional: 7.000 kg/h, estimación externa; no es un valor confirmado del modelo de Infinite Flight.'},
   'challenger':{name:'Bombardier Challenger 350 · IF-DUOA',oew:11000,mtow:18416,mlw:15490,fuelCapacity:6350,burn:853,range:3200,vSpeeds:{mtow:18416,b1:108,br:115,b2:123},flaps:['10','20'],defaultFuel:4000,defaultCargo:1000,source:'Consumo de crucero de referencia: aproximadamente 853 kg/h; puede variar con altitud, peso y potencia.'},
@@ -98,6 +131,7 @@
   $('result').innerHTML=html;
  });
  updateAircraft(false);
+ detectAirport();
 })();
 </script>
 </body></html>
