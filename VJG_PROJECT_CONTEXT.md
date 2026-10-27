@@ -6,8 +6,8 @@ Published site: https://vistajetvirtual.netlify.app/
 ## Purpose
 This repository should contain the complete VistaJet Group Virtual website and its tools. The Flight Management System (FMS / Flight Desk) is a section/tool of VJG, not a separate project and must not replace the corporate homepage.
 
-## Current repository state checked 2026-10-21
-The root currently contains README.md, codigo-vjg-descarga.zip, index.html, and vjg-github-upload.zip. The current index.html is a Flight Desk/FMS page, not the complete corporate VJG homepage. The complete site and its latest developed sections are not yet consolidated in this repository. Do not claim otherwise.
+## Current repository state checked 2026-10-27
+The GitHub root is the public static site (homepage, fleet, hubs, generators, calculators, pilot ranks, and shared `vjg-*.js`). Do not treat `index.html` as a Flight Desk replacement. The 2026-10-21 note that the homepage was only the FMS is obsolete.
 
 ## Operational rules
 - Callsign prefix: VJT.
@@ -31,10 +31,15 @@ The root currently contains README.md, codigo-vjg-descarga.zip, index.html, and 
 - Visual identity: scarlet red #E31837, charcoal #17191D, silver #C7CBD1; use the continuous red side line to the footer where appropriate.
 - Preserve existing navigation, fleet, hubs, numbering, missions, and functionality unless the user explicitly asks for a change.
 
+## Language (confirmed 2026-10-27)
+Spanish and English are explicit on each page: visible copy uses `.vjg-es` / `.vjg-en`, and script-generated text uses `VJGLang.t(es, en)`. The choice is stored in `localStorage` key `vjg-lang` and sets `document.documentElement.lang`. Do not add another translator, a DOM dictionary, or a MutationObserver. ICAO codes, VJT numbers, and registrations stay unchanged.
+Default language is Spanish until the visitor chooses English.
+
 ## Editing and deployment rules
 - Inspect current files before editing.
 - Never overwrite the corporate homepage with the FMS.
-- Do not publish/deploy to Netlify without explicit authorization.
-- Do not claim changes were committed, tested, or deployed unless verified.
+- Standing order from the user (2026-10-27): every requested change in this project is done here, pushed to GitHub `jevin701-design/vistajetvirtual` branch `main`, and published to Netlify site `vistajetvirtual` (`7d79a95d-c15c-4708-8372-bf595653f6d4`, https://vistajetvirtual.netlify.app/). Do not ask the user to upload files or drag a folder into Netlify.
+- After publish, tell the user when the public page is ready. Do not claim a commit or deploy succeeded until it is verified.
+- Supabase (project `cgrczmsjhauheibprtge`) is used from the browser. This chat cannot open the Supabase dashboard. Table, RLS, and Auth changes need SQL the user runs there.
 - Commit intended site sections coherently and verify the resulting file tree and deployment.
 - Update this file when confirmed project decisions change.
